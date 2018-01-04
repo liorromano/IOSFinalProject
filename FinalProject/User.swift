@@ -43,6 +43,6 @@ class User{
         json["lastUpdate"] = ServerValue.timestamp()
         return json
     }
-
-
+    
+    
 }

@@ -23,6 +23,7 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
     @IBOutlet weak var SignUpFullnameTxt: UITextField!
     @IBOutlet weak var SignUpEmailTxt: UITextField!
     @IBOutlet weak var SignUpUserNameTxt: UITextField!
+   
     
     //buttons
     @IBOutlet weak var SignUpSignUpBtn: UIButton!
