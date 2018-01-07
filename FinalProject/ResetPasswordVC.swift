@@ -45,9 +45,30 @@ class ResetPasswordVC: UIViewController {
             alert.addAction(ok)
             self.present(alert, animated: true, completion: nil)
         }
+        else
+        {
+            Model.instance.checkEmail(email: ResetPasswordEmailTxt.text!, callback: { (answer) in
+                if(answer == true)
+                {
+                    //show alert massage
+                    let alert = UIAlertController(title: "Done", message: "Reset Password email sent", preferredStyle: UIAlertControllerStyle.alert)
+                    let ok = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil)
+                    alert.addAction(ok)
+                    self.ResetPasswordEmailTxt.text = nil
+                    self.present(alert, animated: true, completion: nil)
+                    
+                }
+                else
+                {
         
-        //need to add server call for reset password
-        
+                    //show alert massage
+                    let alert = UIAlertController(title: "Error", message: "wrong email", preferredStyle: UIAlertControllerStyle.alert)
+                    let ok = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil)
+                    alert.addAction(ok)
+                    self.present(alert, animated: true, completion: nil)
+                }
+            })
+        }
         
         
     }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bucket
-   type = "1"
+   type = "0"
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
@@ -9,14 +9,14 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FinalProject/SignUpVC.swift"
-            timestampString = "535290960.124939"
+            filePath = "FinalProject/ResetPasswordVC.swift"
+            timestampString = "535822488.350226"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "33"
-            endingLineNumber = "33"
-            landmarkName = "SignUpVC"
-            landmarkType = "3">
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "resetPassword_click(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -25,13 +25,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FinalProject/SignUpVC.swift"
-            timestampString = "535290960.124939"
+            filePath = "FinalProject/Model.swift"
+            timestampString = "535823616.525878"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
-            landmarkName = "viewDidLoad()"
+            startingLineNumber = "218"
+            endingLineNumber = "218"
+            landmarkName = "checkEmail(email:callback:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

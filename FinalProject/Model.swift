@@ -177,7 +177,7 @@ class Model{
         return UIImage(contentsOfFile:filename.path)
     }*/
     
-    func checkIfUserExist(userName:String,email: String, callback:@escaping (String?)->Void)
+    public func checkIfUserExist(userName:String,email: String, callback:@escaping (String?)->Void)
     {
         var userEmailCheck: String?
         var userNameCheck: String?
@@ -213,6 +213,30 @@ class Model{
         })
         
        
+    }
+    
+    public func checkEmail(email: String, callback:@escaping (Bool?)->Void)
+    {
+        var userEmailCheck: String?
+        modelFirebase?.checkIfUserExistByUserEmail(email: email, callback: { (answer) in
+            userEmailCheck = answer!
+            if(userEmailCheck?.compare("Email exist") == ComparisonResult.orderedSame)
+            {
+                self.modelFirebase?.sendResetPassword(email: email)
+                callback(true)
+            }
+            else
+            {
+                callback(false)
+            }
+        })
+    }
+    
+    public func login (email: String, password: String, callback:@escaping (Bool?)->Void)
+    {
+        modelFirebase?.authentication(email: email, password: password, callback: { (answer) in
+            callback(answer)
+        })
     }
     
 }

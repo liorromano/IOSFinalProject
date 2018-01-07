@@ -21,14 +21,15 @@ class ModelFirebaseUsers{
     }
     
     func addNewUser(user: User, password: String, email: String, completionBlock:@escaping (Error?)->Void){
-        let myRef = dataBase?.child("Users").child(user.userName)
-         myRef?.setValue(user.toJson())
-         myRef?.setValue(user.toJson()){(error, dbref) in
-            completionBlock(error)
-        }
         Auth.auth().createUser(withEmail: email, password: password) {
-            (user, error) in
-            //??????????????
+            (uID, error) in
+            user.uID = uID?.uid
+            let myRef = self.dataBase?.child("Users").child(user.userName)
+            myRef?.setValue(user.toJson())
+            myRef?.setValue(user.toJson()){(error, dbref) in
+                completionBlock(error)
+            }
+
         }
     }
     
@@ -96,5 +97,28 @@ class ModelFirebaseUsers{
         }
     }
     
+    func sendResetPassword(email: String)
+    {
+        Auth.auth().sendPasswordReset(withEmail: email) { (error) in
+          
+        }
+        
+    }
+    
+    public func authentication(email: String, password: String, callback:@escaping (Bool?)->Void)
+    {
+        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+            if(user != nil)
+            {
+                print("user autenticated")
+                callback(true)
+            }
+            else{
+             print ("there was an error")
+                callback (false)
+            }
+        }
+        
+    }
 
 }

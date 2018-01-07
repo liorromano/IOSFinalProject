@@ -55,12 +55,23 @@ class SignInVC: UIViewController {
                 alert.addAction(ok)
                 self.present(alert, animated: true, completion: nil)
             
-            
         }
         else
         {
-        
-        
+           Model.instance.login(email: SignInUsermaneTxt.text!, password: SignInPasswordTxt.text!, callback: { (answer) in
+            if(answer == true)
+            {
+                print ("autenticated")
+            }
+            else{
+                print("not autenticated")
+                let alert = UIAlertController(title: "Error", message: "please check email and password", preferredStyle: UIAlertControllerStyle.alert)
+                let ok = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil)
+                alert.addAction(ok)
+                self.present(alert, animated: true, completion: nil)
+            }
+           })
+            
         }
     }
 }
