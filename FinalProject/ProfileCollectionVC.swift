@@ -46,10 +46,10 @@ class ProfileCollectionVC: UICollectionViewController {
         Model.instance.getAllPostsAndObserve(type: "profile")
         
 
-       /* //pull to refresh
+        //pull to refresh
         refresher = UIRefreshControl()
         refresher.addTarget(self, action: #selector(ProfileCollectionVC.refresh), for: UIControlEvents.valueChanged)
-        collectionView?.addSubview(refresher)*/
+        collectionView?.addSubview(refresher)
         
         
       
@@ -107,10 +107,10 @@ class ProfileCollectionVC: UICollectionViewController {
         }
     
     //refreshing func
-   /* func refresh(){
+    func refresh(){
         collectionView?.reloadData()
         
-    }*/
+    }
     
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
