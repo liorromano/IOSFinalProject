@@ -63,10 +63,19 @@ class PostVC: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! PostCell
-        //cell.dateLabel.text = self.postList[indexPath.row].lastUpdate
-        cell.descriptionLabel.text = self.postList[indexPath.row].description
+        cell.TimeLabel.text = self.postList[indexPath.row].lastUpdate?.stringValue
+        cell.Description.text = self.postList[indexPath.row].description
+        Model.instance.getUserById(id: self.postList[indexPath.row].uID) { (user) in
+            cell.UsernameBtn.setTitle(user?.userName, for: .normal)
+            if(user?.imageUrl != nil)
+            {
+                Model.instance.getImage(urlStr: (user?.imageUrl)!, callback: { (image) in
+                    cell.ProfilePicture.image = image
+                })
+            }
+        }
         Model.instance.getImagePost(urlStr: self.postList[indexPath.row].imageUrl, callback: { (image) in
-            cell.picturePost.image = image
+            cell.PostImage.image = image
         })
 
         return cell

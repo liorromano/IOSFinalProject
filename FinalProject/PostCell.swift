@@ -10,26 +10,15 @@ import UIKit
 
 class PostCell: UITableViewCell {
     //header objects
-    @IBOutlet weak var userImage: UIImageView!
-    @IBOutlet weak var usernameButton: UIButton!
-    @IBOutlet weak var dateLabel: UILabel!
-    
-    //main picture
-    @IBOutlet weak var picturePost: UIImageView!
-    
-    //buttons
-    @IBOutlet weak var likeButton: UIButton!
-    @IBOutlet weak var moreButton: UIButton!
-    @IBOutlet weak var commentButton: UIButton!
-    
-    //labels
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var likeLabel: UILabel!
-    
-    
-    
-   
-    
+    @IBOutlet weak var PostImage: UIImageView!
+
+    @IBOutlet weak var UsernameBtn: UIButton!
+    @IBOutlet weak var ProfilePicture: UIImageView!
+    @IBOutlet weak var TimeLabel: UILabel!
+    @IBOutlet weak var LikeBtn: UIButton!
+    @IBOutlet weak var CommentBtn: UIButton!
+    @IBOutlet weak var Description: UILabel!
+    @IBOutlet weak var LikesLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
