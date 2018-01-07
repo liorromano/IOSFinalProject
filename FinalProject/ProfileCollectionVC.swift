@@ -28,36 +28,33 @@ class ProfileCollectionVC: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView,
                                  viewForSupplementaryElementOfKind kind: String,
                                  at indexPath: IndexPath) -> UICollectionReusableView {
-        //1
-        switch kind {
-        //2
-        case UICollectionElementKindSectionHeader:
-            //3
-            
+   
             //define haeder
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "ProfileHeader", for: indexPath) as! ProfileHeaderVC
             
             //headerView.label.text = searches[(indexPath as NSIndexPath).section].searchTerm
             
             //get the user data with connection to firebase
-            Model.instance.getUserById(id: "eden shmueli") { (user) in
+            Model.instance.loggedinUser(callback: { (uID) in
                 
-                headerView.HeaderFullNameLbl.text = user?.fullName
-                //title at the top of the profile page
-                self.navigationItem.title=user?.fullName
-                
-                Model.instance.getImage(urlStr: (user?.imageUrl)!, callback: { (image) in
-                    headerView.HeaderAvaImg.image = image
-                })
-                
-                
-            }
+                Model.instance.getUserById(id:uID! ) { (user) in
+                    
+                    headerView.HeaderFullNameLbl.text = user?.fullName
+                    //title at the top of the profile page
+                    self.navigationItem.title=user?.fullName
+                    
+                    Model.instance.getImage(urlStr: (user?.imageUrl)!, callback: { (image) in
+                        headerView.HeaderAvaImg.image = image
+                    })
+                    
+                    
+                }
+            })
+            headerView.button.setTitle("edit profile", for: UIControlState.normal)
             return headerView
-        default:
-            //4
-            assert(false, "Unexpected element kind")
         }
-    }
+
+    
     
     // MARK: UICollectionViewDelegate
     

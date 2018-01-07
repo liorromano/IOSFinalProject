@@ -33,6 +33,7 @@ class ModelFirebaseUsers{
         }
     }
     
+    
     lazy var storageRef = Storage.storage().reference(forURL:
         "gs://finalproject-53f16.appspot.com/profile/")
     
@@ -146,6 +147,11 @@ class ModelFirebaseUsers{
         }) { (error) in
             print(error.localizedDescription)
         }
+    }
+    
+    func loggedinUser(callback:@escaping (String?)->Void){
+        callback(Auth.auth().currentUser?.uid)
+            
     }
 
 

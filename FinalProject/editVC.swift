@@ -19,6 +19,11 @@ class editVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource, UII
     @IBOutlet weak var telTxt: UITextField!
     @IBOutlet weak var genderTxt: UITextField!
     
+    //buttons
+    @IBOutlet weak var cancelButton: UIScrollView!
+    @IBOutlet weak var saveButton: UIScrollView!
+    
+    
     //pickerView & pickerData
     var genderPicker: UIPickerView!
     let genders = ["male","female"]

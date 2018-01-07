@@ -147,6 +147,7 @@ class Model{
     func getImage(urlStr:String, callback:@escaping (UIImage?)->Void){
         //1. try to get the image from local store
         let url = URL(string: urlStr)
+        if(url != nil){
         let localImageName = url!.lastPathComponent
         if let image = self.getImageFromFile(name: localImageName){
             callback(image)
@@ -160,6 +161,7 @@ class Model{
                 //4. return the image to the user
                 callback(image)
             })
+        }
         }
     }
     
@@ -242,6 +244,13 @@ class Model{
         modelFirebase?.authentication(email: email, password: password, callback: { (answer) in
             callback(answer)
         })
+    }
+    
+    func loggedinUser(callback:@escaping (String?)->Void){
+        modelFirebase?.loggedinUser(callback: { (ans) in
+            callback(ans)
+        })
+        
     }
     
 }
