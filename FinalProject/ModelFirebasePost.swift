@@ -25,7 +25,17 @@ class ModelFirebasePost{
         let postNumber = String(post.postID)
         let myRef = self.dataBase?.child("posts").child(post.uID).child(postNumber)
         myRef?.setValue(post.toJson())
-        callback(true)
+        myRef?.setValue(post.toJson()){(error, dbref) in
+            if (error != nil)
+            {
+                callback(false)
+            }
+            else
+            {
+                callback(true)
+            }
+        }
+   
         
     }
     
@@ -82,6 +92,7 @@ class ModelFirebasePost{
         Model.instance.loggedinUser { (logginUser) in
             self.dataBase?.child("posts").child(logginUser!).observeSingleEvent(of: .value, with: { (snapshot) in
                 for child in snapshot.children{
+                    print("for")
                     // Get post value
                     let snap = child as! DataSnapshot
                     let value = snap.value as? NSDictionary
@@ -89,9 +100,12 @@ class ModelFirebasePost{
                     postArray.append(post)
                 }
                 if(postArray.count != 0){
+                    print("postarray count")
+                    print(postArray.count)
                     callback(postArray)
                 }
                 else{
+                    print("else")
                     callback(nil)
                 }
             })
@@ -103,7 +117,14 @@ class ModelFirebasePost{
     
     func fromPostArraytoPicArray(posts: [Post], callback:@escaping ([UIImage]?)->Void)
     {
-        
+        var picArray = [UIImage]()
+        for post in posts
+        {
+            Model.instance.getImagePost(urlStr: post.imageUrl, callback: { (image) in
+                picArray.append(image!)
+            })
+        }
+        callback(picArray)
     }
     
     

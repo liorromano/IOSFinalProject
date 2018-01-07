@@ -19,10 +19,12 @@ class ProfileCollectionVC: UICollectionViewController {
     var picArray = [UIImage]()
     
     var spinner: UIActivityIndicatorView?
-    
+    var user: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         
         //pull to refresh
         refresher = UIRefreshControl()
@@ -44,19 +46,19 @@ class ProfileCollectionVC: UICollectionViewController {
                self.collectionView?.reloadData()
         
     }
-    
+
     override func collectionView(_ collectionView: UICollectionView,
                                  viewForSupplementaryElementOfKind kind: String,
                                  at indexPath: IndexPath) -> UICollectionReusableView {
+        print("second")
    
             //define haeder
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "ProfileHeader", for: indexPath) as! ProfileHeaderVC
             spinner?.startAnimating()
             //get the user data with connection to firebase
             Model.instance.loggedinUser(callback: { (uID) in
-                
                 Model.instance.getUserById(id:uID! ) { (user) in
-                    
+                    self.user = user
                     headerView.HeaderFullNameLbl.text = user?.fullName
                     //title at the top of the profile page
                     self.navigationItem.title=user?.userName
@@ -81,27 +83,48 @@ class ProfileCollectionVC: UICollectionViewController {
         
     }
     
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("first")
+        return 2
+    }
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         print("picture cell")
         //define cell
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath as IndexPath) as! PictureCell
         
         Model.instance.loadPostsToUserProfile { (posts) in
-            if(posts != nil){
+           // print("collection view cell")
+            //print(posts?.count)
+           /* if(posts != nil){
+                for post in posts!
+                {
+                    Model.instance.getImagePost(urlStr: post.imageUrl, callback: { (image) in
+                        self.picArray.append(image!)
+                    })
                 
-                Model.instance.fromPostArraytoPicArray(posts: posts!, callback: { (images) in
+                    
+                }
+                for image in self.picArray
+                {
+                    cell.picturePost.image = image
+                }*/
+                
+               Model.instance.fromPostArraytoPicArray(posts: posts!, callback: { (images) in
                     self.picArray=images!
                     let image = self.picArray[indexPath.row]
                     cell.picturePost.image = image
                     
                 })
             }
-            
-        }
         return cell
-    }
+
+        }
+    
     
 }
+    
+
 
 
     // MARK: UICollectionViewDelegate

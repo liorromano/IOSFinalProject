@@ -63,11 +63,6 @@ class uploadVC: UIViewController ,UIImagePickerControllerDelegate, UINavigationC
         publishButton.isEnabled = true
         publishButton.backgroundColor = UIColor(red: 52.0/255.0, green: 169.0/255.0, blue: 255.0/255.0, alpha: 1)
         
-        //implement second tap for zooming image
-        let zoomTap = UITapGestureRecognizer(target : self , action : "zoomImage")
-        zoomTap.numberOfTapsRequired = 1
-        picImage.isUserInteractionEnabled = true
-        picImage.addGestureRecognizer(zoomTap)
         
     }
     
@@ -130,6 +125,24 @@ class uploadVC: UIViewController ,UIImagePickerControllerDelegate, UINavigationC
                         self.imageUrl = url
                         let post = Post(userName:(user?.userName)!, imageUrl:self.imageUrl!, uID:userID!, description:self.titleText.text ,postID:(user?.numberOfPosts)!+1)
                         Model.instance.addNewPost(post: post, callback: { (ans) in
+                            if (ans == true)
+                            {
+                                user?.numberOfPosts = (user?.numberOfPosts)!+1
+                                Model.instance.updateUser(user: user!, callback: { (ans) in
+                                    if(ans == true)
+                                    {
+                                    print("true")
+                                    self.tabBarController!.selectedIndex = 0
+                                    
+                                    }
+                                    else
+                                    {
+                                    
+                                    
+                                    }
+                                })
+                            }
+                            
                         })
                     })
                 })

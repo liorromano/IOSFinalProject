@@ -13,6 +13,10 @@
 		2935AA63A8BB63AE50C94D21 /* Pods_FinalProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 323C8731C7EE9DC30892FBF7 /* Pods_FinalProject.framework */; };
 		2C028BDE1FEFB5180024E2E9 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C028BDD1FEFB5180024E2E9 /* Model.swift */; };
 		2C028BE01FEFB6200024E2E9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C028BDF1FEFB6200024E2E9 /* GoogleService-Info.plist */; };
+		2C3218BC1FF9208D0051F42B /* LastUpdateTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3218B91FF9208D0051F42B /* LastUpdateTable.swift */; };
+		2C3218BD1FF9208D0051F42B /* Post+sql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3218BA1FF9208D0051F42B /* Post+sql.swift */; };
+		2C3218BE1FF9208D0051F42B /* ModelSql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3218BB1FF9208D0051F42B /* ModelSql.swift */; };
+		2C3218C01FF921C60051F42B /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3218BF1FF921C60051F42B /* libsqlite3.0.tbd */; };
 		2C7886EA1FE128CC0089B5BF /* Pacifico.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2C7886E91FE128CC0089B5BF /* Pacifico.ttf */; };
 		2C7886EC1FE12D4C0089B5BF /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2C7886EB1FE12D4C0089B5BF /* bg.jpg */; };
 		2C7886EE1FE13CD30089B5BF /* ProfileCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7886ED1FE13CD30089B5BF /* ProfileCollectionVC.swift */; };
@@ -61,6 +65,11 @@
 		06C50B841FF2A0C10022F8F2 /* uploadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = uploadVC.swift; sourceTree = "<group>"; };
 		2C028BDD1FEFB5180024E2E9 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		2C028BDF1FEFB6200024E2E9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		2C3218B91FF9208D0051F42B /* LastUpdateTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LastUpdateTable.swift; sourceTree = "<group>"; };
+		2C3218BA1FF9208D0051F42B /* Post+sql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Post+sql.swift"; sourceTree = "<group>"; };
+		2C3218BB1FF9208D0051F42B /* ModelSql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelSql.swift; sourceTree = "<group>"; };
+		2C3218BF1FF921C60051F42B /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		2C3218C21FF926480051F42B /* FinalProject-Bridging-H eader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FinalProject-Bridging-H eader.h"; sourceTree = SOURCE_ROOT; };
 		2C7886E91FE128CC0089B5BF /* Pacifico.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pacifico.ttf; sourceTree = "<group>"; };
 		2C7886EB1FE12D4C0089B5BF /* bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpg; sourceTree = "<group>"; };
 		2C7886ED1FE13CD30089B5BF /* ProfileCollectionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCollectionVC.swift; sourceTree = "<group>"; };
@@ -105,6 +114,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C3218C01FF921C60051F42B /* libsqlite3.0.tbd in Frameworks */,
 				2935AA63A8BB63AE50C94D21 /* Pods_FinalProject.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -153,6 +163,10 @@
 		2CC9FF5D1FD9A4D7001D9273 /* FinalProject */ = {
 			isa = PBXGroup;
 			children = (
+				2C3218C21FF926480051F42B /* FinalProject-Bridging-H eader.h */,
+				2C3218B91FF9208D0051F42B /* LastUpdateTable.swift */,
+				2C3218BA1FF9208D0051F42B /* Post+sql.swift */,
+				2C3218BB1FF9208D0051F42B /* ModelSql.swift */,
 				2C028BDF1FEFB6200024E2E9 /* GoogleService-Info.plist */,
 				2C028BDD1FEFB5180024E2E9 /* Model.swift */,
 				2CC9FF5E1FD9A4D7001D9273 /* AppDelegate.swift */,
@@ -217,6 +231,7 @@
 		68D00F9E3F8C702F75578916 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				2C3218BF1FF921C60051F42B /* libsqlite3.0.tbd */,
 				323C8731C7EE9DC30892FBF7 /* Pods_FinalProject.framework */,
 				C2DBD6C7A5BCB308A0D723CF /* Pods_FinalProjectTests.framework */,
 				6BA43C79FFAD3E993AEB1ACF /* Pods_FinalProjectUITests.framework */,
@@ -533,6 +548,7 @@
 				2CC9FF8F1FD9A5CE001D9273 /* SignUpVC.swift in Sources */,
 				2CA2440D1FE7D622003B3625 /* ModelFirebaseUsers.swift in Sources */,
 				06C50B811FF279800022F8F2 /* ModelFirebasePost.swift in Sources */,
+				2C3218BC1FF9208D0051F42B /* LastUpdateTable.swift in Sources */,
 				2C7886EE1FE13CD30089B5BF /* ProfileCollectionVC.swift in Sources */,
 				2CA2440F1FE7DEC6003B3625 /* User.swift in Sources */,
 				846942C51FE9456500FD8B0F /* editVC.swift in Sources */,
@@ -542,8 +558,10 @@
 				2CC9FF911FD9A5EB001D9273 /* ResetPasswordVC.swift in Sources */,
 				84ADACAF1FEBCD5E00B72314 /* PictureCell.swift in Sources */,
 				8481BC331FEBB344007193BC /* FollowersCell.swift in Sources */,
+				2C3218BE1FF9208D0051F42B /* ModelSql.swift in Sources */,
 				06C50B851FF2A0C10022F8F2 /* uploadVC.swift in Sources */,
 				8481BC311FEBB322007193BC /* FollowersVC.swift in Sources */,
+				2C3218BD1FF9208D0051F42B /* Post+sql.swift in Sources */,
 				2C7886F01FE13D080089B5BF /* ProfileHeaderVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -702,6 +720,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = romano.FinalProject.FinalProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "FinalProject-Bridging-H eader.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
@@ -717,6 +736,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = romano.FinalProject.FinalProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "FinalProject-Bridging-H eader.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
