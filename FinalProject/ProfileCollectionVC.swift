@@ -22,6 +22,7 @@ class ProfileCollectionVC: UICollectionViewController {
         return 0
     }
     
+<<<<<<< HEAD
     //////sirton 23 daka 4:21 !!!!!!!!!!!!!!!!!!!!!!!!!!!
  
     override func collectionView(_ collectionView: UICollectionView,
@@ -36,6 +37,19 @@ class ProfileCollectionVC: UICollectionViewController {
         }
     }
 
+=======
+    /* //////sirton 23 daka 4:21 !!!!!!!!!!!!!!!!!!!!!!!!!!!
+    override func collectionView(_ collectionView: UICollectionView,
+                                 viewForSupplementaryElementOfKind kind: String,
+                                 at indexPath: IndexPath) -> UICollectionReusableView{
+        let header=collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionElementKindSectionHeader, withReuseIdentifier:"Header" , for: indexPath) as! ProfileHeaderVC
+        
+        header.HeaderFullNameLbl.text=
+        
+    }
+ */
+ 
+>>>>>>> 22740362b38cc0be8f4b9037ab73dc196a2d8b59
     /*
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)

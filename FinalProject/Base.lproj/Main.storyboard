@@ -418,7 +418,11 @@
         <scene sceneID="fkd-KC-eyl">
             <objects>
                 <collectionViewController storyboardIdentifier="ProfileCollectionVC" id="KxN-wD-Wv9" customClass="ProfileCollectionVC" customModule="FinalProject" customModuleProvider="target" sceneMemberID="viewController">
+<<<<<<< HEAD
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" id="pKB-oE-35E">
+=======
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="pKB-oE-35E">
+>>>>>>> 22740362b38cc0be8f4b9037ab73dc196a2d8b59
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -665,17 +669,32 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+<<<<<<< HEAD
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="UserPicture" translatesAutoresizingMaskIntoConstraints="NO" id="qoc-y7-7pY">
                                         <rect key="frame" x="8" y="-56" width="68" height="68"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="fullname" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="wah-24-KJH">
                                         <rect key="frame" x="84" y="-56" width="100" height="68"/>
+=======
+                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="fullname" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="wah-24-KJH">
+                                        <rect key="frame" x="101" y="8" width="100" height="68"/>
+>>>>>>> 22740362b38cc0be8f4b9037ab73dc196a2d8b59
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                     </textField>
+<<<<<<< HEAD
+=======
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="UserPicture" translatesAutoresizingMaskIntoConstraints="NO" id="qoc-y7-7pY">
+                                        <rect key="frame" x="16" y="8" width="68" height="68"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="68" id="Chx-xt-Hff"/>
+                                            <constraint firstAttribute="height" constant="68" id="S64-NG-DcJ"/>
+                                        </constraints>
+                                    </imageView>
+>>>>>>> 22740362b38cc0be8f4b9037ab73dc196a2d8b59
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                             </scrollView>
@@ -820,6 +839,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="136"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
+<<<<<<< HEAD
                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="K22-B4-27i">
                                             <rect key="frame" x="10" y="10" width="357" height="90"/>
                                             <subviews>
@@ -864,6 +884,29 @@
                                         <constraint firstAttribute="trailingMargin" secondItem="K22-B4-27i" secondAttribute="trailing" id="bGe-H8-gOZ"/>
                                         <constraint firstItem="K22-B4-27i" firstAttribute="top" secondItem="p8p-8q-e0y" secondAttribute="topMargin" constant="2" id="nmn-q6-NE4"/>
                                     </constraints>
+=======
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="UserPicture" translatesAutoresizingMaskIntoConstraints="NO" id="Aij-LL-6mP">
+                                            <rect key="frame" x="10" y="10" width="60" height="60"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="userName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Kz-bQ-Yyp">
+                                            <rect key="frame" x="78" y="29" width="187" height="23"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RO1-xX-9Zj">
+                                            <rect key="frame" x="273" y="29" width="78" height="30"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <state key="normal" title="FOLLOWING">
+                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            </state>
+                                        </button>
+                                    </subviews>
+>>>>>>> 22740362b38cc0be8f4b9037ab73dc196a2d8b59
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="followingButtom" destination="RO1-xX-9Zj" id="aFc-RL-GhC"/>
@@ -880,7 +923,11 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UqE-tR-IlU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+<<<<<<< HEAD
             <point key="canvasLocation" x="4385.5" y="158.5"/>
+=======
+            <point key="canvasLocation" x="4386" y="159"/>
+>>>>>>> 22740362b38cc0be8f4b9037ab73dc196a2d8b59
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vnG-w7-eoF">
