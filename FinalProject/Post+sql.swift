@@ -24,8 +24,8 @@ extension Post{
     static func createTable(database:OpaquePointer?)->Bool{
         var errormsg: UnsafeMutablePointer<Int8>? = nil
         
-        let res = sqlite3_exec(database, "CREATE TABLE IF NOT EXISTS " + POST_TABLE + " ( " + POST_USER_ID + " TEXT PRIMARY KEY, "
-            + POST_ID + " INTEGER, "
+        let res = sqlite3_exec(database, "CREATE TABLE IF NOT EXISTS " + POST_TABLE + " ( " + POST_ID  + " TEXT PRIMARY KEY, "
+            + POST_USER_ID + " TEXT SECONDARY KEY, "
             + POST_USER_NAME + " TEXT, " + POST_IMAGE_URL + " TEXT, " + POST_DESCRIPTION + " TEXT, " + POST_LOCATION + " TEXT, "
             + POST_LAST_UPDATE + " DOUBLE)", nil, nil, &errormsg);
         if(res != 0){
@@ -39,13 +39,19 @@ extension Post{
     func addPostToLocalDb(database:OpaquePointer?){
         var sqlite3_stmt: OpaquePointer? = nil
         if (sqlite3_prepare_v2(database,"INSERT OR REPLACE INTO " + Post.POST_TABLE
-            + "(" + Post.POST_USER_ID + ","
-            + Post.POST_ID + ","
+            + "(" + Post.POST_ID + ","
+            + Post.POST_USER_ID + ","
             + Post.POST_USER_NAME + "," + Post.POST_IMAGE_URL + "," + Post.POST_DESCRIPTION + "," + Post.POST_LOCATION + ","
             + Post.POST_LAST_UPDATE + ") VALUES (?,?,?,?,?,?,?);",-1, &sqlite3_stmt,nil) == SQLITE_OK){
             
+            let sql = "INSERT OR REPLACE INTO " + Post.POST_TABLE
+                + "(" + Post.POST_USER_ID + ","
+                + Post.POST_ID + ","
+                + Post.POST_USER_NAME + "," + Post.POST_IMAGE_URL + "," + Post.POST_DESCRIPTION + "," + Post.POST_LOCATION + ","
+                + Post.POST_LAST_UPDATE + ") VALUES (?,?,?,?,?,?,?);"
+            print("insert post to db - \(sql)")
             let userId = self.uID.cString(using: .utf8)
-            let postId = self.postID
+            let postId = self.postID?.cString(using: .utf8)
             let userName = self.userName.cString(using: .utf8)
             var imageUrl = "".cString(using: .utf8)
             if self.imageUrl != nil  {
@@ -60,8 +66,8 @@ extension Post{
                 location = self.location?.cString(using: .utf8)
             }
             
-            sqlite3_bind_text(sqlite3_stmt, 1, userId,-1,nil);
-            sqlite3_bind_int(sqlite3_stmt, 2, Int32(postId));
+            sqlite3_bind_text(sqlite3_stmt, 2, userId,-1,nil);
+            sqlite3_bind_text(sqlite3_stmt, 1, postId,-1,nil);
             sqlite3_bind_text(sqlite3_stmt, 3, userName,-1,nil);
             if(imageUrl != nil)
             {
@@ -89,13 +95,24 @@ extension Post{
         sqlite3_finalize(sqlite3_stmt)
     }
     
-    static func getAllPostsFromLocalDb(database:OpaquePointer?)->[Post]{
+    static func getAllPostsFromLocalDb(type:String, database:OpaquePointer?)->[Post]{
         var posts = [Post]()
         var sqlite3_stmt: OpaquePointer? = nil
-        if (sqlite3_prepare_v2(database,"SELECT * from POSTS;",-1,&sqlite3_stmt,nil) == SQLITE_OK){
+        var sql = ""
+        if (type == "all")
+        {
+            sql = "SELECT * from POSTS ORDER BY POST_LAST_UPDATE DESC;"
+
+        }
+        else
+        {
+            sql = "SELECT * from POSTS WHERE POST_USER_ID = '".appending(type).appending("' ORDER BY POST_LAST_UPDATE DESC;")
+
+        }
+        if (sqlite3_prepare_v2(database,sql,-1,&sqlite3_stmt,nil) == SQLITE_OK){
             while(sqlite3_step(sqlite3_stmt) == SQLITE_ROW){
-                let userId =  String(validatingUTF8: sqlite3_column_text(sqlite3_stmt,0))
-                let postId =  Int(sqlite3_column_int(sqlite3_stmt,1))
+                let userId =  String(validatingUTF8: sqlite3_column_text(sqlite3_stmt,1))
+                let postId =  String(validatingUTF8: sqlite3_column_text(sqlite3_stmt,0))
                 let userName =  String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,2))
                 let update =  Double(sqlite3_column_double(sqlite3_stmt,6))
                 var imageUrl = String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,3))

@@ -17,10 +17,12 @@
 		2C3218BD1FF9208D0051F42B /* Post+sql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3218BA1FF9208D0051F42B /* Post+sql.swift */; };
 		2C3218BE1FF9208D0051F42B /* ModelSql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C3218BB1FF9208D0051F42B /* ModelSql.swift */; };
 		2C3218C01FF921C60051F42B /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 2C3218BF1FF921C60051F42B /* libsqlite3.0.tbd */; };
+		2C41615B1FFD49C000ED3956 /* StartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C41615A1FFD49C000ED3956 /* StartVC.swift */; };
 		2C7886EA1FE128CC0089B5BF /* Pacifico.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2C7886E91FE128CC0089B5BF /* Pacifico.ttf */; };
 		2C7886EC1FE12D4C0089B5BF /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2C7886EB1FE12D4C0089B5BF /* bg.jpg */; };
 		2C7886EE1FE13CD30089B5BF /* ProfileCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7886ED1FE13CD30089B5BF /* ProfileCollectionVC.swift */; };
 		2C7886F01FE13D080089B5BF /* ProfileHeaderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7886EF1FE13D080089B5BF /* ProfileHeaderVC.swift */; };
+		2C79FAF91FFD1C6100959B8F /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C79FAF81FFD1C6100959B8F /* TabBarVC.swift */; };
 		2CA2440D1FE7D622003B3625 /* ModelFirebaseUsers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA2440C1FE7D622003B3625 /* ModelFirebaseUsers.swift */; };
 		2CA2440F1FE7DEC6003B3625 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CA2440E1FE7DEC6003B3625 /* User.swift */; };
 		2CC9FF5F1FD9A4D7001D9273 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC9FF5E1FD9A4D7001D9273 /* AppDelegate.swift */; };
@@ -70,10 +72,12 @@
 		2C3218BB1FF9208D0051F42B /* ModelSql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelSql.swift; sourceTree = "<group>"; };
 		2C3218BF1FF921C60051F42B /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		2C3218C21FF926480051F42B /* FinalProject-Bridging-H eader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FinalProject-Bridging-H eader.h"; sourceTree = SOURCE_ROOT; };
+		2C41615A1FFD49C000ED3956 /* StartVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartVC.swift; sourceTree = "<group>"; };
 		2C7886E91FE128CC0089B5BF /* Pacifico.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pacifico.ttf; sourceTree = "<group>"; };
 		2C7886EB1FE12D4C0089B5BF /* bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpg; sourceTree = "<group>"; };
 		2C7886ED1FE13CD30089B5BF /* ProfileCollectionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCollectionVC.swift; sourceTree = "<group>"; };
 		2C7886EF1FE13D080089B5BF /* ProfileHeaderVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderVC.swift; sourceTree = "<group>"; };
+		2C79FAF81FFD1C6100959B8F /* TabBarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
 		2CA2440C1FE7D622003B3625 /* ModelFirebaseUsers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModelFirebaseUsers.swift; sourceTree = "<group>"; };
 		2CA2440E1FE7DEC6003B3625 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		2CC9FF5B1FD9A4D7001D9273 /* FinalProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -193,6 +197,8 @@
 				06C50B801FF279800022F8F2 /* ModelFirebasePost.swift */,
 				06C50B821FF27A360022F8F2 /* Post.swift */,
 				06C50B841FF2A0C10022F8F2 /* uploadVC.swift */,
+				2C79FAF81FFD1C6100959B8F /* TabBarVC.swift */,
+				2C41615A1FFD49C000ED3956 /* StartVC.swift */,
 			);
 			path = FinalProject;
 			sourceTree = "<group>";
@@ -545,11 +551,13 @@
 				2C028BDE1FEFB5180024E2E9 /* Model.swift in Sources */,
 				848D91811FEBF23F00838A3C /* PostVC.swift in Sources */,
 				2CC9FF8D1FD9A5B3001D9273 /* SignInVC.swift in Sources */,
+				2C41615B1FFD49C000ED3956 /* StartVC.swift in Sources */,
 				2CC9FF8F1FD9A5CE001D9273 /* SignUpVC.swift in Sources */,
 				2CA2440D1FE7D622003B3625 /* ModelFirebaseUsers.swift in Sources */,
 				06C50B811FF279800022F8F2 /* ModelFirebasePost.swift in Sources */,
 				2C3218BC1FF9208D0051F42B /* LastUpdateTable.swift in Sources */,
 				2C7886EE1FE13CD30089B5BF /* ProfileCollectionVC.swift in Sources */,
+				2C79FAF91FFD1C6100959B8F /* TabBarVC.swift in Sources */,
 				2CA2440F1FE7DEC6003B3625 /* User.swift in Sources */,
 				846942C51FE9456500FD8B0F /* editVC.swift in Sources */,
 				848D91831FEBF25E00838A3C /* PostCell.swift in Sources */,

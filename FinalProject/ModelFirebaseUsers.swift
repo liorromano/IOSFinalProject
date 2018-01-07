@@ -99,6 +99,14 @@ class ModelFirebaseUsers{
         }
         
     }
+    
+    static public func logOut(callback:@escaping (Bool?)->Void)
+    {
+        try! Auth.auth().signOut()
+        callback(true)
+        
+    }
+    
    static func getImageFromFirebase(url:String, callback:@escaping (UIImage?)->Void){
         let ref = Storage.storage().reference(forURL: url)
         

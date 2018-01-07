@@ -10,6 +10,10 @@ import UIKit
 
 
 class ProfileCollectionVC: UICollectionViewController {
+    
+    
+    @IBOutlet weak var LogoutBtn: UIBarButtonItem!
+    
     //refresher variable
     var refresher: UIRefreshControl!
     
@@ -21,28 +25,34 @@ class ProfileCollectionVC: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //spinner configuration
+        spinner = UIActivityIndicatorView()
+        spinner?.center = (self.collectionView?.center)!
+        spinner?.hidesWhenStopped = true
+        spinner?.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        collectionView?.addSubview(spinner!)
+        
+        
         ModelNotification.PostList.observe{(list) in
             if(list != nil)
             {
                 self.postList = list!
+                self.spinner?.stopAnimating()
                 self.collectionView?.reloadData()
+                
             }
         }
-        Model.instance.getAllPostsAndObserveForProfile()
+        spinner?.startAnimating()
+        Model.instance.getAllPostsAndObserve(type: "profile")
         
 
        /* //pull to refresh
         refresher = UIRefreshControl()
         refresher.addTarget(self, action: #selector(ProfileCollectionVC.refresh), for: UIControlEvents.valueChanged)
-        collectionView?.addSubview(refresher)
+        collectionView?.addSubview(refresher)*/
         
         
-        //spinner configuration
-        spinner = UIActivityIndicatorView()
-        spinner?.center = self.view.center
-        spinner?.hidesWhenStopped = true
-        spinner?.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
-        view.addSubview(spinner!)*/
+      
         
     }
 
@@ -64,10 +74,10 @@ class ProfileCollectionVC: UICollectionViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    /*override func viewWillAppear(_ animated: Bool) {
-               self.collectionView?.reloadData()
+    override func viewWillAppear(_ animated: Bool) {
+            self.collectionView?.reloadData()
         
-    }*/
+    }
 
     override func collectionView(_ collectionView: UICollectionView,
                                  viewForSupplementaryElementOfKind kind: String,
@@ -76,23 +86,21 @@ class ProfileCollectionVC: UICollectionViewController {
    
             //define haeder
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "ProfileHeader", for: indexPath) as! ProfileHeaderVC
-            spinner?.startAnimating()
             //get the user data with connection to firebase
             Model.instance.loggedinUser(callback: { (uID) in
                 Model.instance.getUserById(id:uID! ) { (user) in
                     headerView.HeaderFullNameLbl.text = user?.fullName
+                    headerView.posts.text = String (self.postList.count)
                     //title at the top of the profile page
                     self.navigationItem.title=user?.userName
                     if (user?.imageUrl != nil)
                     {
                     Model.instance.getImage(urlStr: (user?.imageUrl)!, callback: { (image) in
                         headerView.HeaderAvaImg.image = image
-                        self.spinner?.stopAnimating()
-                        
                     })
                 }
                 }
-                self.spinner?.stopAnimating()
+               
             })
             headerView.button.setTitle("edit profile", for: UIControlState.normal)
             return headerView
@@ -123,7 +131,31 @@ class ProfileCollectionVC: UICollectionViewController {
             })
             return cell
         }
+    
+    @IBAction func logOutBtn_clicked(_ sender: Any) {
+                spinner?.startAnimating()
+               Model.instance.logOut { (ans) in
+                if(ans == true)
+                {
+                    print ("logged out")
+                    self.spinner?.stopAnimating()
+                    let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+                    let newViewController = storyBoard.instantiateViewController(withIdentifier: "LoginVC")
+                    self.present(newViewController, animated: true, completion: nil)
+                }
+                else{
+                    print("not logged out")
+                    self.spinner?.stopAnimating()
+                    let alert = UIAlertController(title: "Error", message: "Can not logout", preferredStyle: UIAlertControllerStyle.alert)
+                    let ok = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil)
+                    alert.addAction(ok)
+                    self.present(alert, animated: true, completion: nil)
+                }
+        }
     }
+    
+}
+
 
 
 

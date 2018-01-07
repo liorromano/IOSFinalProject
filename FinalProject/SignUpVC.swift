@@ -93,6 +93,11 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
             //show alert massage
             alerts(writeTitle: "Please", writeMessage: "fill in fields")
         }
+        else if ((SignUpRepeatPasswordTxt.text!.characters.count) < 6)
+        {
+            alerts(writeTitle: "Error", writeMessage: "please insert 6 characters password")
+        }
+
         else if(!isValidEmail(testStr: SignUpEmailTxt.text!))
         {
             alerts(writeTitle: "Error", writeMessage: "please insert valid email")

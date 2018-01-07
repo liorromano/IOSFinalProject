@@ -10,8 +10,12 @@ import UIKit
 
 class uploadVC: UIViewController ,UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
+    @IBOutlet weak var contentStack: UIStackView!
+    
+      var spinner: UIActivityIndicatorView?
+    
     @IBOutlet weak var picImage: UIImageView!
-    @IBOutlet weak var titleText: UITextView!
+    @IBOutlet weak var titleText: UITextField!
     @IBOutlet weak var publishButton: UIButton!
     var imageUrl:String?
     
@@ -35,6 +39,14 @@ class uploadVC: UIViewController ,UIImagePickerControllerDelegate, UINavigationC
         avaTap.numberOfTapsRequired = 1
         picImage.isUserInteractionEnabled = true
         picImage.addGestureRecognizer(avaTap)
+        
+      
+        //spinner configuration
+        spinner = UIActivityIndicatorView()
+        spinner?.center = self.picImage.center
+        spinner?.hidesWhenStopped = true
+        spinner?.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
+        picImage.addSubview(spinner!)
         
     }
     
@@ -113,6 +125,7 @@ class uploadVC: UIViewController ,UIImagePickerControllerDelegate, UINavigationC
   
     //clicked publish button
     @IBAction func publishButton(_ sender: Any) {
+        spinner?.startAnimating()
         //dissmiss keyboard
         self.view.endEditing(true)
         
@@ -121,9 +134,11 @@ class uploadVC: UIViewController ,UIImagePickerControllerDelegate, UINavigationC
             //save the post to firebase
             Model.instance.loggedinUser(callback: { (userID) in
                 Model.instance.getUserById(id: userID!, callback: { (user) in
+                    var postId = String((user?.numberOfPosts)!+1)
+                    postId = (user?.uID?.appending(postId))!
                     Model.instance.savePostImage(image: image, userName: (user?.userName)!, userID: userID!, postID: (user?.numberOfPosts)!+1, callback: { (url) in
                         self.imageUrl = url
-                        let post = Post(userName:(user?.userName)!, imageUrl:self.imageUrl!, uID:userID!, description:self.titleText.text ,postID:(user?.numberOfPosts)!+1)
+                        let post = Post(userName:(user?.userName)!, imageUrl:self.imageUrl!, uID:userID!, description:self.titleText.text ,postID: postId)
                         Model.instance.addNewPost(post: post, callback: { (ans) in
                             if (ans == true)
                             {
@@ -133,12 +148,17 @@ class uploadVC: UIViewController ,UIImagePickerControllerDelegate, UINavigationC
                                     {
                                     print("true")
                                     self.picImage.image = UIImage(named: "UserPicture")
+                                    self.titleText.text = nil
+                                    self.spinner?.stopAnimating()
                                     self.tabBarController!.selectedIndex = 0
-                                    
                                     }
                                     else
                                     {
-                                    
+                                        self.spinner?.stopAnimating()
+                                        let alert = UIAlertController(title: "Error", message: "can not upload post", preferredStyle: UIAlertControllerStyle.alert)
+                                        let ok = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil)
+                                        alert.addAction(ok)
+                                        self.present(alert, animated: true, completion: nil)
                                     
                                     }
                                 })

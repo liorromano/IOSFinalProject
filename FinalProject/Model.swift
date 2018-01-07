@@ -97,44 +97,12 @@ class Model{
             }
         })
     }
+
     
-     /* func getAllUsers(callback:@escaping ([User])->Void){
-        // get last update date from SQL
-        let lastUpdateDate = LastUpdateTable.getLastUpdateDate(database: modelSql?.database, table: User.USER_TABLE)
-        
-        // get all updated records from firebase
-        modelFirebase?.getAllUsers(lastUpdateDate, callback: { (users) in
-            //update the local db
-            print("got \(users.count) new records from FB")
-            var lastUpdate:Date?
-            for user in users{
-                user.addUserToLocalDb(database: self.modelSql?.database)
-                if lastUpdate == nil{
-                    lastUpdate = user.lastUpdate
-                }else{
-                    if lastUpdate!.compare(user.lastUpdate!) == ComparisonResult.orderedAscending{
-                        lastUpdate = user.lastUpdate
-                    }
-                }
-            }
-            
-            //upadte the last update table
-            if (lastUpdate != nil){
-                LastUpdateTable.setLastUpdate(database: self.modelSql!.database, table: User.USER_TABLE, lastUpdate: lastUpdate!)
-            }
-            
-            //get the complete list from local DB
-            let totalList = User.getAllUsersFromLocalDb(database: self.modelSql?.database)
-            
-            //return the list to the caller
-            callback(totalList)
-        })
-    }*/
-    
-    func getAllPostsAndObserveForProfile(){
+    func getAllPostsAndObserve(type: String){
         print("Model.getAllStudentsAndObserve")
         // get last update date from SQL
-        let lastUpdateDate = LastUpdateTable.getLastUpdateDate(database: modelSql?.database, table: Post.POST_TABLE)
+        let lastUpdateDate = Date(timeIntervalSince1970:0) //LastUpdateTable.getLastUpdateDate(database: modelSql?.database, table: Post.POST_TABLE)
         
         // get all updated records from firebase
         ModelFirebasePost.getAllPostsAndObserveForProfile(lastUpdateDate, callback: { (posts) in
@@ -158,10 +126,24 @@ class Model{
             }
             
             //get the complete list from local DB
-            let totalList = Post.getAllPostsFromLocalDb(database: self.modelSql?.database)
-            print("\(totalList)")
-            
-            ModelNotification.PostList.post(data: totalList)
+            if (type == "profile")
+            {
+                self.loggedinUser(callback: { (ans) in
+                    let totalList = Post.getAllPostsFromLocalDb(type: ans!, database: self.modelSql?.database)
+                    print("\(totalList)")
+                    
+                    ModelNotification.PostList.post(data: totalList)
+                })
+
+            }
+            else
+            {
+                let totalList = Post.getAllPostsFromLocalDb(type: "all", database: self.modelSql?.database)
+                print("\(totalList)")
+                
+                ModelNotification.PostList.post(data: totalList)
+            }
+          
         })
     }
     
@@ -286,7 +268,12 @@ class Model{
         
     }
     
-    
+    public func logOut(callback:@escaping (Bool?)->Void)
+    {
+        ModelFirebaseUsers.logOut(callback: { (answer) in
+            callback(answer)
+        })
+    }
     
     
     func updateUser(user: User, callback:@escaping (Bool)->Void)
@@ -303,8 +290,6 @@ class Model{
         
         ModelFirebasePost.addNewPost(post: post, callback: { (answer) in
             callback(answer)
-            
-            
         })
         
     }
@@ -324,7 +309,7 @@ class Model{
         ModelFirebasePost.saveImageToFirebase(image: image, userID: userID, postID: postID, callback: { (url) in
             if (url != nil){
                 //2. save image localy
-                self.saveImageToFile(image: image, name: userID.appending(" ").appending(String(postID)) )
+                self.saveImageToFile(image: image, name: userID.appending(String(postID)) )
             }
             //3. notify the user on complete
             callback(url)

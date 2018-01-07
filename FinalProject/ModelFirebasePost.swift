@@ -15,7 +15,7 @@ class ModelFirebasePost{
     
     static func addNewPost(post: Post,callback:@escaping (Bool)->Void){
         print("add new post- model firebase post")
-        let postNumber = String(post.postID)
+        let postNumber = String(describing: post.postID)
         let ref = Database.database().reference().child("posts").child(post.uID).child(postNumber)
         ref.setValue(post.toJson())
         ref.setValue(post.toJson()){(error, dbref) in
@@ -35,7 +35,7 @@ class ModelFirebasePost{
     static func saveImageToFirebase(image:UIImage, userID: String ,postID: Int, callback:@escaping (String?)->Void){
         let postNumber = String(postID)
         let filesRef = Storage.storage().reference(forURL:
-            "gs://finalproject-53f16.appspot.com/posts/").child(userID).child(postNumber)
+            "gs://finalproject-53f16.appspot.com/posts/").child(userID).child(userID.appending(postNumber))
         if let data = UIImageJPEGRepresentation(image, 0.8) {
             filesRef.putData(data, metadata: nil) { metadata, error in
                 if (error != nil) {
