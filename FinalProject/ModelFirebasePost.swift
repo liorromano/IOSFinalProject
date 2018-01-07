@@ -13,19 +13,12 @@ import FirebaseAuth
 
 class ModelFirebasePost{
     
-    var dataBase: DatabaseReference?
-    
-    init(){
-        //FirebaseApp.configure()
-        dataBase=Database.database().reference()
-    }
-    
-    func addNewPost(post: Post,callback:@escaping (Bool)->Void){
+    static func addNewPost(post: Post,callback:@escaping (Bool)->Void){
         print("add new post- model firebase post")
         let postNumber = String(post.postID)
-        let myRef = self.dataBase?.child("posts").child(post.uID).child(postNumber)
-        myRef?.setValue(post.toJson())
-        myRef?.setValue(post.toJson()){(error, dbref) in
+        let ref = Database.database().reference().child("posts").child(post.uID).child(postNumber)
+        ref.setValue(post.toJson())
+        ref.setValue(post.toJson()){(error, dbref) in
             if (error != nil)
             {
                 callback(false)
@@ -39,13 +32,10 @@ class ModelFirebasePost{
         
     }
     
-    
-    lazy var storageRef = Storage.storage().reference(forURL:
-        "gs://finalproject-53f16.appspot.com/posts/")
-    
-    func saveImageToFirebase(image:UIImage, userID: String ,postID: Int, callback:@escaping (String?)->Void){
+    static func saveImageToFirebase(image:UIImage, userID: String ,postID: Int, callback:@escaping (String?)->Void){
         let postNumber = String(postID)
-        let filesRef = storageRef.child(userID).child(postNumber)
+        let filesRef = Storage.storage().reference(forURL:
+            "gs://finalproject-53f16.appspot.com/posts/").child(userID).child(postNumber)
         if let data = UIImageJPEGRepresentation(image, 0.8) {
             filesRef.putData(data, metadata: nil) { metadata, error in
                 if (error != nil) {
@@ -62,7 +52,7 @@ class ModelFirebasePost{
     
     
     
-    func getImageFromFirebase(url:String, callback:@escaping (UIImage?)->Void){
+   static func getImageFromFirebase(url:String, callback:@escaping (UIImage?)->Void){
         let ref = Storage.storage().reference(forURL: url)
         
         ref.getData(maxSize: 10000000, completion: {(data, error) in
@@ -76,8 +66,8 @@ class ModelFirebasePost{
         })
     }
     
-    func getPostById(postID:String , userID:String , callback:@escaping (Post)->Void){
-        dataBase?.child("posts").child(userID).child(postID).observeSingleEvent(of: .value, with: { (snapshot) in
+   static func getPostById(postID:String , userID:String , callback:@escaping (Post)->Void){
+        Database.database().reference().child("posts").child(userID).child(postID).observeSingleEvent(of: .value, with: { (snapshot) in
             // Get post value
             let value = snapshot.value as? NSDictionary
             let post = Post(json: value as! Dictionary<String,Any> )
@@ -87,10 +77,10 @@ class ModelFirebasePost{
         }
     }
     
-    func loadPostsToUserProfile(callback:@escaping ([Post]?)->Void){
+  static func loadPostsToUserProfile(callback:@escaping ([Post]?)->Void){
         var postArray = [Post]()
         Model.instance.loggedinUser { (logginUser) in
-            self.dataBase?.child("posts").child(logginUser!).observeSingleEvent(of: .value, with: { (snapshot) in
+            Database.database().reference().child("posts").child(logginUser!).observeSingleEvent(of: .value, with: { (snapshot) in
                 for child in snapshot.children{
                     print("for")
                     // Get post value
@@ -115,7 +105,7 @@ class ModelFirebasePost{
         
     }
     
-    func fromPostArraytoPicArray(posts: [Post], callback:@escaping ([UIImage]?)->Void)
+     static func fromPostArraytoPicArray(posts: [Post], callback:@escaping ([UIImage]?)->Void)
     {
         var picArray = [UIImage]()
         for post in posts
@@ -128,7 +118,35 @@ class ModelFirebasePost{
     }
     
     
+    static func clearObservers(){
+        let ref = Database.database().reference().child("posts")
+        ref.removeAllObservers()
+    }
     
+    static func getAllPostsAndObserveForProfile(_ lastUpdateDate:Date?, callback:@escaping ([Post])->Void){
+        print("FB: getAllPostsAndObserve")
+        let handler = {(snapshot:DataSnapshot) in
+            var posts = [Post]()
+            for child in snapshot.children.allObjects{
+                if let childData = child as? DataSnapshot{
+                    if let json = childData.value as? Dictionary<String,Any>{
+                        let post = Post(json: json)
+                        posts.append(post)
+                    }
+                }
+            }
+            callback(posts)
+        }
+        let ref = Database.database().reference().child("posts").child((Auth.auth().currentUser?.uid)!)
+        if (lastUpdateDate != nil){
+            print("q starting at:\(lastUpdateDate!) \(lastUpdateDate!.toFirebase())")
+            let fbQuery = ref.queryOrdered(byChild:"lastUpdate").queryStarting(atValue:lastUpdateDate!.toFirebase())
+            fbQuery.observe(DataEventType.value, with: handler)
+        }else{
+            ref.observe(DataEventType.value, with: handler)
+        }
+    }
+
     
     
     

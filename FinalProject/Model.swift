@@ -9,7 +9,35 @@
 import Foundation
 import UIKit
 
-//let notifyStudentListUpdate = "com.menachi.NotifyStudentListUpdate"
+class ModelNotificationBase<T>{
+    var name:String?
+    
+    init(name:String){
+        self.name = name
+    }
+    
+    func observe(callback:@escaping (T?)->Void)->Any{
+        return NotificationCenter.default.addObserver(forName: NSNotification.Name(name!), object: nil, queue: nil) { (data) in
+            if let data = data.userInfo?["data"] as? T {
+                callback(data)
+            }
+        }
+    }
+    
+    func post(data:T){
+        NotificationCenter.default.post(name: NSNotification.Name(name!), object: self, userInfo: ["data":data])
+    }
+}
+
+class ModelNotification{
+    static let PostList = ModelNotificationBase<[Post]>(name: "PostListNotificatio")
+    static let Post = ModelNotificationBase<Post>(name: "PostNotificatio")
+    
+    static func removeObserver(observer:Any){
+        NotificationCenter.default.removeObserver(observer)
+    }
+}
+
 
 extension Date {
     
@@ -42,23 +70,27 @@ extension Date {
 class Model{
     static let instance = Model()
     
-   // lazy private var modelSql:ModelSql? = ModelSql()
-    lazy private var modelFirebaseUsers:ModelFirebaseUsers? = ModelFirebaseUsers()
-    lazy private var modelFirebasePost:ModelFirebasePost? = ModelFirebasePost()
+    lazy private var modelSql:ModelSql? = ModelSql()
     
     private init(){
         
     }
     
+    func clear(){
+        print("Model.clear")
+        ModelFirebasePost.clearObservers()
+    }
+
+    
     func addUser(user:User, password: String, email: String ){
-        modelFirebaseUsers?.addNewUser(user: user, password: password, email: email ){(error) in
+        ModelFirebaseUsers.addNewUser(user: user, password: password, email: email ){(error) in
             //st.addStudentToLocalDb(database: self.modelSql?.database)
         }
     }
     
     func getUserById(id:String, callback:@escaping (User?)->Void){
         
-        modelFirebaseUsers?.getUserById(id: id, callback:{ (user) in
+        ModelFirebaseUsers.getUserById(id: id, callback:{ (user) in
             if(user != nil)
             {
                 callback(user)
@@ -97,45 +129,45 @@ class Model{
             //return the list to the caller
             callback(totalList)
         })
-    }
+    }*/
     
-  func getAllStudentsAndObserve(){
+    func getAllPostsAndObserveForProfile(){
+        print("Model.getAllStudentsAndObserve")
         // get last update date from SQL
-        let lastUpdateDate = LastUpdateTable.getLastUpdateDate(database: modelSql?.database, table: User.USER_TABLE)
+        let lastUpdateDate = LastUpdateTable.getLastUpdateDate(database: modelSql?.database, table: Post.POST_TABLE)
         
         // get all updated records from firebase
-        modelFirebase?.getAllStudentsAndObserve(lastUpdateDate, callback: { (students) in
+        ModelFirebasePost.getAllPostsAndObserveForProfile(lastUpdateDate, callback: { (posts) in
             //update the local db
-            print("got \(students.count) new records from FB")
+            print("got \(posts.count) new records from FB")
             var lastUpdate:Date?
-            for st in students{
-                st.addStudentToLocalDb(database: self.modelSql?.database)
+            for post in posts{
+                post.addPostToLocalDb(database: self.modelSql?.database)
                 if lastUpdate == nil{
-                    lastUpdate = st.lastUpdate
+                    lastUpdate = post.lastUpdate
                 }else{
-                    if lastUpdate!.compare(st.lastUpdate!) == ComparisonResult.orderedAscending{
-                        lastUpdate = st.lastUpdate
+                    if lastUpdate!.compare(post.lastUpdate!) == ComparisonResult.orderedAscending{
+                        lastUpdate = post.lastUpdate
                     }
                 }
             }
             
             //upadte the last update table
             if (lastUpdate != nil){
-                LastUpdateTable.setLastUpdate(database: self.modelSql!.database, table: Student.ST_TABLE, lastUpdate: lastUpdate!)
+                LastUpdateTable.setLastUpdate(database: self.modelSql!.database, table: Post.POST_TABLE, lastUpdate: lastUpdate!)
             }
             
             //get the complete list from local DB
-            let totalList = Student.getAllStudentsFromLocalDb(database: self.modelSql?.database)
+            let totalList = Post.getAllPostsFromLocalDb(database: self.modelSql?.database)
+            print("\(totalList)")
             
-            //return the list to the observers using notification center
-            NotificationCenter.default.post(name: Notification.Name(rawValue:
-                notifyStudentListUpdate), object:nil , userInfo:["students":totalList])
+            ModelNotification.PostList.post(data: totalList)
         })
-    }*/
+    }
     
     func saveImage(image:UIImage, name:String, callback:@escaping (String?)->Void){
         //1. save image to Firebase
-        modelFirebaseUsers?.saveImageToFirebase(image: image, name: name, callback: {(url) in
+        ModelFirebaseUsers.saveImageToFirebase(image: image, name: name, callback: {(url) in
             if (url != nil){
                 //2. save image localy
                 self.saveImageToFile(image: image, name: name)
@@ -154,7 +186,7 @@ class Model{
             callback(image)
         }else{
             //2. get the image from Firebase
-            modelFirebaseUsers?.getImageFromFirebase(url: urlStr, callback: { (image) in
+            ModelFirebaseUsers.getImageFromFirebase(url: urlStr, callback: { (image) in
                 if (image != nil){
                     //3. save the image localy
                     self.saveImageToFile(image: image!, name: localImageName)
@@ -190,10 +222,10 @@ class Model{
         var userEmailCheck: String?
         var userNameCheck: String?
         
-        modelFirebaseUsers?.checkIfUserExistByUserEmail(email: email, callback: { (answer) in
+        ModelFirebaseUsers.checkIfUserExistByUserEmail(email: email, callback: { (answer) in
             userEmailCheck = answer!
             print("userEmailCheck= "+userEmailCheck!)
-            self.modelFirebaseUsers?.checkIfUserExistByUserName(userName: userName, callback: { (answer) in
+            ModelFirebaseUsers.checkIfUserExistByUserName(userName: userName, callback: { (answer) in
                 userNameCheck = answer!
                 print("userNameCheck= "+userNameCheck!)
                 if((userEmailCheck?.compare("Email exist") == ComparisonResult.orderedSame)&&(userNameCheck?.compare("userName exist") == ComparisonResult.orderedSame)){
@@ -226,11 +258,11 @@ class Model{
     public func checkEmail(email: String, callback:@escaping (Bool?)->Void)
     {
         var userEmailCheck: String?
-        modelFirebaseUsers?.checkIfUserExistByUserEmail(email: email, callback: { (answer) in
+        ModelFirebaseUsers.checkIfUserExistByUserEmail(email: email, callback: { (answer) in
             userEmailCheck = answer!
             if(userEmailCheck?.compare("Email exist") == ComparisonResult.orderedSame)
             {
-                self.modelFirebaseUsers?.sendResetPassword(email: email)
+                ModelFirebaseUsers.sendResetPassword(email: email)
                 callback(true)
             }
             else
@@ -242,13 +274,13 @@ class Model{
     
     public func login (email: String, password: String, callback:@escaping (Bool?)->Void)
     {
-        modelFirebaseUsers?.authentication(email: email, password: password, callback: { (answer) in
+        ModelFirebaseUsers.authentication(email: email, password: password, callback: { (answer) in
             callback(answer)
         })
     }
     
     func loggedinUser(callback:@escaping (String?)->Void){
-        modelFirebaseUsers?.loggedinUser(callback: { (ans) in
+        ModelFirebaseUsers.loggedinUser(callback: { (ans) in
             callback(ans)
         })
         
@@ -259,7 +291,7 @@ class Model{
     
     func updateUser(user: User, callback:@escaping (Bool)->Void)
     {
-        modelFirebaseUsers?.updateUser(user: user, callback: { (answer) in
+        ModelFirebaseUsers.updateUser(user: user, callback: { (answer) in
             callback (answer)
         })
     
@@ -269,7 +301,7 @@ class Model{
     
     func addNewPost(post: Post,callback:@escaping (Bool?)->Void){
         
-        modelFirebasePost?.addNewPost(post: post, callback: { (answer) in
+        ModelFirebasePost.addNewPost(post: post, callback: { (answer) in
             callback(answer)
             
             
@@ -289,10 +321,10 @@ class Model{
     
     func savePostImage(image:UIImage, userName:String, userID:String,postID:Int, callback:@escaping (String?)->Void){
         //1. save image to Firebase
-        modelFirebasePost?.saveImageToFirebase(image: image, userID: userID, postID: postID, callback: { (url) in
+        ModelFirebasePost.saveImageToFirebase(image: image, userID: userID, postID: postID, callback: { (url) in
             if (url != nil){
                 //2. save image localy
-                self.saveImageToFile(image: image, name: userName)
+                self.saveImageToFile(image: image, name: userID.appending(" ").appending(String(postID)) )
             }
             //3. notify the user on complete
             callback(url)
@@ -301,7 +333,7 @@ class Model{
     }
     
     func loadPostsToUserProfile(callback:@escaping ([Post]?)->Void){
-        modelFirebasePost?.loadPostsToUserProfile(callback: { (posts) in
+        ModelFirebasePost.loadPostsToUserProfile(callback: { (posts) in
             if(posts!.count != 0){
                 callback(posts)
             }
@@ -312,7 +344,7 @@ class Model{
     }
     
     func fromPostArraytoPicArray(posts: [Post], callback:@escaping ([UIImage]?)->Void){
-        modelFirebasePost?.fromPostArraytoPicArray(posts: posts, callback: { (picArray) in
+        ModelFirebasePost.fromPostArraytoPicArray(posts: posts, callback: { (picArray) in
             if(picArray != nil){
                 callback(picArray)
             }
@@ -331,7 +363,7 @@ class Model{
                 callback(image)
             }else{
                 //2. get the image from Firebase
-                modelFirebasePost?.getImageFromFirebase(url: urlStr, callback: { (image) in
+                ModelFirebasePost.getImageFromFirebase(url: urlStr, callback: { (image) in
                     if (image != nil){
                         //3. save the image localy
                         self.saveImageToFile(image: image!, name: localImageName)

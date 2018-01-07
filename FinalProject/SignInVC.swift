@@ -26,7 +26,6 @@ class SignInVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         //Pacifico font of label
         SignInLabel.font = UIFont(name: "Pacifico", size: 25)
         

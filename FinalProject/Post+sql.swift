@@ -42,21 +42,21 @@ extension Post{
             + "(" + Post.POST_USER_ID + ","
             + Post.POST_ID + ","
             + Post.POST_USER_NAME + "," + Post.POST_IMAGE_URL + "," + Post.POST_DESCRIPTION + "," + Post.POST_LOCATION + ","
-            + Post.POST_LAST_UPDATE + ") VALUES (?,?,?,?);",-1, &sqlite3_stmt,nil) == SQLITE_OK){
+            + Post.POST_LAST_UPDATE + ") VALUES (?,?,?,?,?,?,?);",-1, &sqlite3_stmt,nil) == SQLITE_OK){
             
-            let userId = self.uID
+            let userId = self.uID.cString(using: .utf8)
             let postId = self.postID
             let userName = self.userName.cString(using: .utf8)
             var imageUrl = "".cString(using: .utf8)
-            if (!(self.imageUrl.isEmpty)) {
+            if self.imageUrl != nil  {
                 imageUrl = self.imageUrl.cString(using: .utf8)
             }
             var description = "".cString(using: .utf8)
-            if (!((self.description?.isEmpty)!)) {
+            if self.description != nil {
                 description = self.description?.cString(using: .utf8)
             }
             var location = "".cString(using: .utf8)
-            if (!((self.location?.isEmpty)!)) {
+            if self.location != nil {
                 location = self.location?.cString(using: .utf8)
             }
             
@@ -94,13 +94,13 @@ extension Post{
         var sqlite3_stmt: OpaquePointer? = nil
         if (sqlite3_prepare_v2(database,"SELECT * from POSTS;",-1,&sqlite3_stmt,nil) == SQLITE_OK){
             while(sqlite3_step(sqlite3_stmt) == SQLITE_ROW){
-                let userId =  String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,1))
-                let postId =  Int(sqlite3_column_int(sqlite3_stmt,2))
-                let userName =  String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,3))
-                let update =  Double(sqlite3_column_double(sqlite3_stmt,7))
-                var imageUrl = String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,4))
-                var description = String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,5))
-                var location = String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,6))
+                let userId =  String(validatingUTF8: sqlite3_column_text(sqlite3_stmt,0))
+                let postId =  Int(sqlite3_column_int(sqlite3_stmt,1))
+                let userName =  String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,2))
+                let update =  Double(sqlite3_column_double(sqlite3_stmt,6))
+                var imageUrl = String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,3))
+                var description = String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,4))
+                var location = String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,5))
                 //print("read from filter st: \(stId) \(name) \(imageUrl)")
                 if (imageUrl != nil && imageUrl == ""){
                     imageUrl = nil

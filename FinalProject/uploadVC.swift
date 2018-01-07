@@ -132,6 +132,7 @@ class uploadVC: UIViewController ,UIImagePickerControllerDelegate, UINavigationC
                                     if(ans == true)
                                     {
                                     print("true")
+                                    self.picImage.image = UIImage(named: "UserPicture")
                                     self.tabBarController!.selectedIndex = 0
                                     
                                     }
