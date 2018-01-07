@@ -55,7 +55,7 @@ class ModelFirebaseUsers{
     func checkIfUserExistByUserName(userName:String, callback:@escaping (String?)->Void)
     {
         getUserById(id: userName, callback: {(user) in
-            if (userName.compare(user.userName) == ComparisonResult.orderedSame)
+            if (user != nil)
             {
                 print("got into user.userName == userName")
                 callback("userName exist")
@@ -115,23 +115,23 @@ class ModelFirebaseUsers{
             if ( data != nil){
                 let image = UIImage(data: data!)
                 callback(image)
-                print("get image from firebase")
             }else{
                 callback(nil)
             }
         })
     }
-    func getUserById(id:String, callback:@escaping (User)->Void){
+    func getUserById(id:String, callback:@escaping (User?)->Void){
         dataBase?.child("Users").child(id).observeSingleEvent(of: .value, with: { (snapshot) in
+            
             // Get user value
-            let value = snapshot.value as? NSDictionary
-            let username = value?["userName"] as? String ?? ""
-            print(username)
-            let fullName = value?["fullName"] as? String ?? ""
-            let imageUrl = value?["imageUrl"] as? String ?? ""
-            let user = User(userName: username, fullName: fullName, imageUrl: imageUrl)
- 
-            callback(user)
+            if let value = snapshot.value as? NSDictionary{
+              let user = User(json: value as! Dictionary<String, Any>)
+                callback(user)
+            }
+            else
+            {
+                callback(nil)
+            }
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -142,6 +142,20 @@ class ModelFirebaseUsers{
             
     }
     
+    func updateUser(user: User, callback:@escaping (Bool)->Void)
+    {
+        dataBase?.child("Users").child(user.uID!).updateChildValues(user.toJson(), withCompletionBlock: { (error, DatabaseReference) in
+            if((error) != nil)
+            {
+                callback(false)
+            }
+            else
+            {
+                callback(true)
+            }
+        })
+    
+    }
  
 
 

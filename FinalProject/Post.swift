@@ -15,19 +15,19 @@ class Post{
     var imageUrl:String
     var lastUpdate:Date?
     var uID:String
-    var postID:String
+    var postID:Int
     var location:String?
     var description:String?
     
     
-    init(userName:String, imageUrl:String, uID:String, location:String? = nil, description:String? = nil ,postID:String){
+    init(userName:String, imageUrl:String, uID:String, location:String? = nil, description:String? = nil ,postID:Int){
         self.userName = userName
         self.imageUrl = imageUrl
         self.uID = uID
         self.location = location
         self.description = description
         self.postID = postID
-      
+        
     }
     
     
@@ -36,7 +36,7 @@ class Post{
         uID = json["uID"] as! String
         location = json["location"] as? String
         description = json["description"] as? String
-        postID = json["postID"] as! String
+        postID = json["postID"] as! Int
         imageUrl=json["imageUrl"] as! String
         if let user = json["lastUpdate"] as? Double{
             self.lastUpdate = Date.fromFirebase(user)

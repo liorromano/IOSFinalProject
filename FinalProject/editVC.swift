@@ -10,6 +10,8 @@ import UIKit
 
 class editVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource, UIImagePickerControllerDelegate,UINavigationControllerDelegate{
     
+    var spinner: UIActivityIndicatorView?
+    
     //UI objects
     @IBOutlet weak var imageProfile: UIImageView!
     @IBOutlet weak var fullNameTxt: UITextField!
@@ -20,15 +22,12 @@ class editVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource, UII
     
     //button
 
+    @IBOutlet weak var backNavButton: UIBarButtonItem!
     @IBOutlet weak var saveButton: UIButton!
-    @IBOutlet weak var cancelButton: UIButton!
-    
-    @IBOutlet weak var EditScrollView: UIScrollView!
-    @IBOutlet weak var EditContentView: UIView!
+
     
     //pickerView & pickerData
     var genderPicker: UIPickerView!
-    var imageUrl:String?
     var selectedImage:UIImage?
     let genders = ["male","female"]
     
@@ -51,7 +50,7 @@ class editVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource, UII
         let bg = UIImageView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
         bg.image = UIImage(named: "bg.jpg")
         bg.layer.zPosition = -1
-        self.EditContentView.addSubview(bg)
+        self.view.addSubview(bg)
         
         //create picker
         genderPicker = UIPickerView()
@@ -61,6 +60,13 @@ class editVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource, UII
         genderPicker.showsSelectionIndicator = true
         genderTxt.inputView = genderPicker
         
+        //spinner configuration
+        spinner = UIActivityIndicatorView()
+        spinner?.center = self.view.center
+        spinner?.hidesWhenStopped = true
+        spinner?.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
+        view.addSubview(spinner!)
+        
         initiliaze()
         
     }
@@ -68,12 +74,13 @@ class editVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource, UII
     
     public func initiliaze()
     {   print("initiliaze")
+        self.spinner?.startAnimating()
         Model.instance.loggedinUser { (uID) in
             if(uID != nil)
             {   print("uid ok")
                 Model.instance.getUserById(id: uID!, callback: { (user) in
                     
-                    if(!(user?.imageUrl?.isEmpty)!)
+                    if(user?.imageUrl != nil)
                     {
                         Model.instance.getImage(urlStr: (user?.imageUrl)!, callback: { (image) in
                             
@@ -88,6 +95,7 @@ class editVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource, UII
                             {
                                 self.telTxt.text?.append((user?.phone)!)
                             }
+                            self.spinner?.stopAnimating()
                             super.viewDidLoad()
                         })
                     }
@@ -104,8 +112,8 @@ class editVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource, UII
                         {
                             self.telTxt.text = user?.phone
                         }
+                        self.spinner?.stopAnimating()
                         super.viewDidLoad()
-                        
                     }
                 })
             }
@@ -140,17 +148,83 @@ class editVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource, UII
         self.present(alert,animated: true, completion: nil)
     }
     
-    //clicked save button
-    @IBAction func save_clicked(_ sender: Any) {
-        print("save clicked")
-        
-    }
+
     
-    
-    //clicked cancel button
-    @IBAction func cancel_clicked(_ sender: Any) {
+    @IBAction func back_Clicked(_ sender: Any) {
         self.view.endEditing(true)
         self.dismiss(animated: true, completion: nil)
+    }
+    //clicked save button
+    @IBAction func save_Clicked(_ sender: Any) {
+        spinner?.startAnimating()
+        //get the user data with connection to firebase
+        Model.instance.loggedinUser(callback: { (uID) in
+            
+            Model.instance.getUserById(id:uID! ) { (user) in
+                if let image = self.selectedImage{
+                    Model.instance.saveImage(image: image, name: (user?.userName)!){(url) in
+                        if(url != nil)
+                        {
+                            user?.imageUrl = url
+                            if (self.genderTxt.text != user?.gender)
+                            {
+                                user?.gender = self.genderTxt.text
+                            }
+                            if (self.telTxt.text != user?.phone)
+                            {
+                                user?.phone = self.telTxt.text
+                            }
+                            if (self.fullNameTxt.text != user?.fullName)
+                            {
+                                user?.fullName = self.fullNameTxt.text!
+                            }
+                            Model.instance.updateUser(user: user!, callback: { (answer) in
+                                if(answer == false)
+                                {
+                                    self.spinner?.stopAnimating()
+                                    self.alert(error: "Error", message: "Can't save parameters")
+                                }
+                                else
+                                {
+                                    self.spinner?.stopAnimating()
+                                    self.dismiss(animated: true, completion: nil)
+                                }
+                            })
+
+                        }
+                    }
+                }
+                else
+                {
+                    if (self.genderTxt.text != user?.gender)
+                    {
+                        user?.gender = self.genderTxt.text
+                    }
+                    if (self.telTxt.text != user?.phone)
+                    {
+                        user?.phone = self.telTxt.text
+                    }
+                    if (self.fullNameTxt.text != user?.fullName)
+                    {
+                        user?.fullName = self.fullNameTxt.text!
+                    }
+                    Model.instance.updateUser(user: user!, callback: { (answer) in
+                        if(answer == false)
+                        {
+                            self.spinner?.stopAnimating()
+                            self.alert(error: "Error", message: "Can't save parameters")
+                        }
+                        else
+                        {
+                            self.spinner?.stopAnimating()
+                            self.dismiss(animated: true, completion: nil)
+                        }
+                    })
+
+                
+                }
+            }
+        })
     }
     
     //picker view methods

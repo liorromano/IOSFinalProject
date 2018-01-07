@@ -256,24 +256,76 @@ class Model{
     
     
     
-    func addNewPost(post: Post,callback:@escaping (Bool)->Void){
+    
+    func updateUser(user: User, callback:@escaping (Bool)->Void)
+    {
+        modelFirebaseUsers?.updateUser(user: user, callback: { (answer) in
+            callback (answer)
+        })
+    
+    }
+    
+
+    
+    func addNewPost(post: Post,callback:@escaping (Bool?)->Void){
         
         modelFirebasePost?.addNewPost(post: post, callback: { (answer) in
             callback(answer)
+            
+            
         })
         
     }
     
     
-   
-
     
-
+    
+    
+    
     
     func getPostById(postID:String , userID:String , callback:@escaping (Post)->Void){
-
+        
     }
     
-
+    func savePostImage(image:UIImage, userName:String, userID:String,postID:Int, callback:@escaping (String?)->Void){
+        //1. save image to Firebase
+        modelFirebasePost?.saveImageToFirebase(image: image, userID: userID, postID: postID, callback: { (url) in
+            if (url != nil){
+                //2. save image localy
+                self.saveImageToFile(image: image, name: userName)
+            }
+            //3. notify the user on complete
+            callback(url)
+        })
+        
+    }
+    
+    func loadPostsToUserProfile(callback:@escaping ([Post]?)->Void){
+        modelFirebasePost?.loadPostsToUserProfile(callback: { (posts) in
+            if(posts!.count != 0){
+                callback(posts)
+            }
+            else{
+                callback(nil)
+            }
+        })
+    }
+    
+    func fromPostArraytoPicArray(posts: [Post], callback:@escaping ([UIImage]?)->Void){
+        modelFirebasePost?.fromPostArraytoPicArray(posts: posts, callback: { (picArray) in
+            if(picArray != nil){
+                callback(picArray)
+            }
+            else{
+                callback(nil)
+            }
+        })
+    }
+    
     
 }
+
+    
+
+    
+

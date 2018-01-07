@@ -10,6 +10,7 @@ import UIKit
 
 class SignInVC: UIViewController {
 
+    var spinner: UIActivityIndicatorView?
     
     //label
     @IBOutlet weak var SignInLabel: UILabel!
@@ -36,6 +37,13 @@ class SignInVC: UIViewController {
         bg.layer.zPosition = -1
         self.view.addSubview(bg)
         
+        //spinner configuration
+        spinner = UIActivityIndicatorView()
+        spinner?.center = self.view.center
+        spinner?.hidesWhenStopped = true
+        spinner?.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
+        view.addSubview(spinner!)
+        
 
     }
 
@@ -46,14 +54,19 @@ class SignInVC: UIViewController {
         //hide keyboard
         self.view.endEditing(true)
         
+        self.spinner?.startAnimating()
+        
         //if textfields are empty
         if SignInUsermaneTxt.text!.isEmpty || SignInPasswordTxt.text!.isEmpty{
+            
+                self.spinner?.stopAnimating()
             
                 //show alert massage
                 let alert = UIAlertController(title: "Please", message: "fill in fields", preferredStyle: UIAlertControllerStyle.alert)
                 let ok = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil)
                 alert.addAction(ok)
                 self.present(alert, animated: true, completion: nil)
+            
             
         }
         else
@@ -62,12 +75,14 @@ class SignInVC: UIViewController {
             if(answer == true)
             {
                 print ("autenticated")
+                self.spinner?.stopAnimating()
                 let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let newViewController = storyBoard.instantiateViewController(withIdentifier: "TabBar")
                 self.present(newViewController, animated: true, completion: nil)
             }
             else{
                 print("not autenticated")
+                self.spinner?.stopAnimating()
                 let alert = UIAlertController(title: "Error", message: "please check email and password", preferredStyle: UIAlertControllerStyle.alert)
                 let ok = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil)
                 alert.addAction(ok)

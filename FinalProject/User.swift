@@ -17,7 +17,8 @@ class User{
     var uID:String?
     var gender:String?
     var phone:String?
-   // var numberOfPosts:Int
+    var numberOfPosts:Int = 0
+
     
     init(userName:String, fullName:String, imageUrl:String? = nil, uID:String? = nil, gender:String? = nil, phone:String? = nil){
         self.userName=userName
@@ -26,19 +27,26 @@ class User{
         self.uID = uID
         self.gender = gender
         self.phone = phone
-        //self.numberOfPosts=0
     }
     
     
     init(json:Dictionary<String,Any>){
         userName = json["userName"] as! String
         fullName = json["fullName"] as! String
-        phone = json["phone"] as? String
-        gender = json["gender"] as? String
         uID = json["uID"] as? String
+        numberOfPosts=(json["numberOfPosts"] as? Int)!
+        if let tel = json["phone"] as? String{
+            phone = tel
+        }
+        
+        if let gen = json["gender"] as? String{
+            gender = gen
+        }
+        
         if let im = json["imageUrl"] as? String{
             imageUrl = im
         }
+        
         if let user = json["lastUpdate"] as? Double{
             self.lastUpdate = Date.fromFirebase(user)
         }
@@ -51,6 +59,7 @@ class User{
         json["gender"] = gender
         json["phone"] = phone
         json["uID"] = uID
+        json["numberOfPosts"] = numberOfPosts
         if (imageUrl != nil){
             json["imageUrl"] = imageUrl!
         }

@@ -18,24 +18,32 @@ class ProfileCollectionVC: UICollectionViewController {
     var uuIDArray = [String]()
     var picArray = [UIImage]()
     
+    var spinner: UIActivityIndicatorView?
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         //pull to refresh
         refresher = UIRefreshControl()
-        refresher.addTarget(self, action: "refresh", for: UIControlEvents.valueChanged)
+        refresher.addTarget(self, action: #selector(ProfileCollectionVC.refresh), for: UIControlEvents.valueChanged)
         collectionView?.addSubview(refresher)
         
         
-    }
-    
-    
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        //spinner configuration
+        spinner = UIActivityIndicatorView()
+        spinner?.center = self.view.center
+        spinner?.hidesWhenStopped = true
+        spinner?.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+        view.addSubview(spinner!)
         
-        return 0
     }
     
     
+    override func viewWillAppear(_ animated: Bool) {
+               self.collectionView?.reloadData()
+        
+    }
     
     override func collectionView(_ collectionView: UICollectionView,
                                  viewForSupplementaryElementOfKind kind: String,
@@ -43,9 +51,7 @@ class ProfileCollectionVC: UICollectionViewController {
    
             //define haeder
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "ProfileHeader", for: indexPath) as! ProfileHeaderVC
-            
-            //headerView.label.text = searches[(indexPath as NSIndexPath).section].searchTerm
-            
+            spinner?.startAnimating()
             //get the user data with connection to firebase
             Model.instance.loggedinUser(callback: { (uID) in
                 
@@ -53,14 +59,17 @@ class ProfileCollectionVC: UICollectionViewController {
                     
                     headerView.HeaderFullNameLbl.text = user?.fullName
                     //title at the top of the profile page
-                    self.navigationItem.title=user?.fullName
-                    
+                    self.navigationItem.title=user?.userName
+                    if (user?.imageUrl != nil)
+                    {
                     Model.instance.getImage(urlStr: (user?.imageUrl)!, callback: { (image) in
                         headerView.HeaderAvaImg.image = image
+                        self.spinner?.stopAnimating()
+                        
                     })
-                    
-                    
                 }
+                }
+                self.spinner?.stopAnimating()
             })
             headerView.button.setTitle("edit profile", for: UIControlState.normal)
             return headerView
@@ -72,9 +81,29 @@ class ProfileCollectionVC: UICollectionViewController {
         
     }
     
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        print("picture cell")
+        //define cell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath as IndexPath) as! PictureCell
+        
+        Model.instance.loadPostsToUserProfile { (posts) in
+            if(posts != nil){
+                
+                Model.instance.fromPostArraytoPicArray(posts: posts!, callback: { (images) in
+                    self.picArray=images!
+                    let image = self.picArray[indexPath.row]
+                    cell.picturePost.image = image
+                    
+                })
+            }
+            
+        }
+        return cell
+    }
+    
+}
 
-    
-    
+
     // MARK: UICollectionViewDelegate
     
     /*
@@ -106,4 +135,4 @@ class ProfileCollectionVC: UICollectionViewController {
      }
      */
     
-}
+
