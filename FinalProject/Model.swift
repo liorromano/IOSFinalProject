@@ -55,12 +55,17 @@ class Model{
         }
     }
     
-    /*func getUserById(id:String, callback:@escaping (User)->Void){
+    func getUserById(id:String, callback:@escaping (User?)->Void){
         
-        
+        modelFirebase?.getUserById(id: id, callback:{ (user) in
+            if(user != nil)
+            {
+                callback(user)
+            }
+        })
     }
     
-    func getAllUsers(callback:@escaping ([User])->Void){
+     /* func getAllUsers(callback:@escaping ([User])->Void){
         // get last update date from SQL
         let lastUpdateDate = LastUpdateTable.getLastUpdateDate(database: modelSql?.database, table: User.USER_TABLE)
         
@@ -93,7 +98,7 @@ class Model{
         })
     }
     
-    func getAllStudentsAndObserve(){
+  func getAllStudentsAndObserve(){
         // get last update date from SQL
         let lastUpdateDate = LastUpdateTable.getLastUpdateDate(database: modelSql?.database, table: User.USER_TABLE)
         
@@ -139,7 +144,7 @@ class Model{
         })
     }
     
-    /*func getImage(urlStr:String, callback:@escaping (UIImage?)->Void){
+    func getImage(urlStr:String, callback:@escaping (UIImage?)->Void){
         //1. try to get the image from local store
         let url = URL(string: urlStr)
         let localImageName = url!.lastPathComponent
@@ -156,7 +161,7 @@ class Model{
                 callback(image)
             })
         }
-    }*/
+    }
     
     
     private func saveImageToFile(image:UIImage, name:String){
@@ -172,10 +177,10 @@ class Model{
         return documentsDirectory
     }
     
-    /*private func getImageFromFile(name:String)->UIImage?{
+    private func getImageFromFile(name:String)->UIImage?{
         let filename = getDocumentsDirectory().appendingPathComponent(name)
         return UIImage(contentsOfFile:filename.path)
-    }*/
+    }
     
     public func checkIfUserExist(userName:String,email: String, callback:@escaping (String?)->Void)
     {

@@ -16,7 +16,6 @@ class editVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource, UII
     @IBOutlet weak var fullNameTxt: UITextField!
     @IBOutlet weak var aboutMeTxt: UITextView!
     @IBOutlet weak var titleLbl:UILabel!
-    @IBOutlet weak var emailTxt:UITextField!
     @IBOutlet weak var telTxt: UITextField!
     @IBOutlet weak var genderTxt: UITextField!
     
@@ -37,7 +36,7 @@ class editVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource, UII
         genderTxt.inputView = genderPicker
         
         //tap to choose image
-        let avaTap = UITapGestureRecognizer(target: self, action: "loadImg:")
+        let avaTap = UITapGestureRecognizer(target: self, action: Selector(("loadImg:")))
         avaTap.numberOfTapsRequired = 1
         imageProfile.isUserInteractionEnabled = true
         imageProfile.addGestureRecognizer(avaTap)
@@ -78,16 +77,11 @@ class editVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource, UII
         self.present(alert,animated: true, completion: nil)
     }
     
+
     //clicked save button
     @IBAction func save_clicked(_ sender: Any) {
-        if !validateEmail(email: emailTxt.text!){
-            alert(error: "Incorrect email", message:"please provide correct email address")
-            return
-        }
-        
-        
+            print("save clicked")
     }
-    
     //clicked cancel button
     @IBAction func cancel_clicked(_ sender: Any) {
         self.view.endEditing(true)

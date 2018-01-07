@@ -24,7 +24,7 @@ class ModelFirebaseUsers{
         Auth.auth().createUser(withEmail: email, password: password) {
             (uID, error) in
             user.uID = uID?.uid
-            let myRef = self.dataBase?.child("Users").child(user.userName)
+            let myRef = self.dataBase?.child("Users").child(user.uID!)
             myRef?.setValue(user.toJson())
             myRef?.setValue(user.toJson()){(error, dbref) in
                 completionBlock(error)
@@ -34,7 +34,7 @@ class ModelFirebaseUsers{
     }
     
     lazy var storageRef = Storage.storage().reference(forURL:
-        "gs://finalproject-53f16.appspot.com")
+        "gs://finalproject-53f16.appspot.com/profile/")
     
     func saveImageToFirebase(image:UIImage, name:(String), callback:@escaping (String?)->Void){
         let filesRef = storageRef.child(name)
@@ -120,5 +120,33 @@ class ModelFirebaseUsers{
         }
         
     }
+    func getImageFromFirebase(url:String, callback:@escaping (UIImage?)->Void){
+        let ref = Storage.storage().reference(forURL: url)
+        
+        ref.getData(maxSize: 10000000, completion: {(data, error) in
+            if ( data != nil){
+                let image = UIImage(data: data!)
+                callback(image)
+                print("get image from firebase")
+            }else{
+                callback(nil)
+            }
+        })
+    }
+    func getUserById(id:String, callback:@escaping (User)->Void){
+        dataBase?.child("Users").child(id).observeSingleEvent(of: .value, with: { (snapshot) in
+            // Get user value
+            let value = snapshot.value as? NSDictionary
+            let username = value?["userName"] as? String ?? ""
+            print(username)
+            let fullName = value?["fullName"] as? String ?? ""
+            let imageUrl = value?["imageUrl"] as? String ?? ""
+            let user = User(userName: username, fullName: fullName, imageUrl: imageUrl)
+            callback(user)
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+
 
 }
