@@ -11,7 +11,6 @@ import UIKit
 class editVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource, UIImagePickerControllerDelegate,UINavigationControllerDelegate{
     
     //UI objects
-    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageProfile: UIImageView!
     @IBOutlet weak var fullNameTxt: UITextField!
     @IBOutlet weak var aboutMeTxt: UITextView!
@@ -19,18 +18,40 @@ class editVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource, UII
     @IBOutlet weak var telTxt: UITextField!
     @IBOutlet weak var genderTxt: UITextField!
     
-    //buttons
-    @IBOutlet weak var cancelButton: UIScrollView!
-    @IBOutlet weak var saveButton: UIScrollView!
+    //button
+
+    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var cancelButton: UIButton!
     
+    @IBOutlet weak var EditScrollView: UIScrollView!
+    @IBOutlet weak var EditContentView: UIView!
     
     //pickerView & pickerData
     var genderPicker: UIPickerView!
+    var imageUrl:String?
+    var selectedImage:UIImage?
     let genders = ["male","female"]
     
-    
+ 
     override func viewDidLoad() {
+        print("view did load")
         super.viewDidLoad()
+        
+        //round ava
+        self.imageProfile.layer.cornerRadius = self.imageProfile.frame.size.width / 2
+        self.imageProfile.clipsToBounds = true
+        
+        //declare select image tap
+        let avaTap = UITapGestureRecognizer(target: self, action: #selector(SignUpVC.loadImg))
+        avaTap.numberOfTapsRequired = 1
+        self.imageProfile.isUserInteractionEnabled = true
+        self.imageProfile.addGestureRecognizer(avaTap)
+        
+        //background
+        let bg = UIImageView(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height))
+        bg.image = UIImage(named: "bg.jpg")
+        bg.layer.zPosition = -1
+        self.EditContentView.addSubview(bg)
         
         //create picker
         genderPicker = UIPickerView()
@@ -40,39 +61,76 @@ class editVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource, UII
         genderPicker.showsSelectionIndicator = true
         genderTxt.inputView = genderPicker
         
-        //tap to choose image
-        let avaTap = UITapGestureRecognizer(target: self, action: Selector(("loadImg:")))
-        avaTap.numberOfTapsRequired = 1
-        imageProfile.isUserInteractionEnabled = true
-        imageProfile.addGestureRecognizer(avaTap)
-        
-        
+        initiliaze()
         
     }
     
-    //func to call UIImagePickerController
-    func loadImg(recognizer: UITapGestureRecognizer){
+    
+    public func initiliaze()
+    {   print("initiliaze")
+        Model.instance.loggedinUser { (uID) in
+            if(uID != nil)
+            {   print("uid ok")
+                Model.instance.getUserById(id: uID!, callback: { (user) in
+                    
+                    if(!(user?.imageUrl?.isEmpty)!)
+                    {
+                        Model.instance.getImage(urlStr: (user?.imageUrl)!, callback: { (image) in
+                            
+                            
+                            self.imageProfile.image = image
+                            self.fullNameTxt.text?.append((user?.fullName)!)
+                            if(user?.gender != nil)
+                            {
+                                self.genderTxt.text = user?.gender
+                            }
+                            if(user?.phone != nil)
+                            {
+                                self.telTxt.text?.append((user?.phone)!)
+                            }
+                            super.viewDidLoad()
+                        })
+                    }
+                    else
+                    {
+                        
+                        
+                        self.fullNameTxt.text = user?.fullName
+                        if(user?.gender != nil)
+                        {
+                            self.genderTxt.text = user?.gender
+                        }
+                        if(user?.phone != nil)
+                        {
+                            self.telTxt.text = user?.phone
+                        }
+                        super.viewDidLoad()
+                        
+                    }
+                })
+            }
+        }
+        
+    }
+    
+    
+    //call picker to select image
+    public func loadImg(recognizer: UITapGestureRecognizer)
+    {
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.sourceType = .photoLibrary
         picker.allowsEditing = true
-        present(picker, animated: true, completion: nil)
-        
-    }
-    //method to finilize our actions with UIImagePickerController
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        imageProfile.image = info[UIImagePickerControllerEditedImage] as? UIImage
-        self.dismiss(animated: true,completion: nil)
+        present(picker,animated: true, completion: nil)
     }
     
-    //validate for email textfield
-    func validateEmail(email: String) -> Bool{
-        let regex = "[A-Z0-9a-z._+-]{4}+@[A-Za-z0-9.-]{2}+\\.[A-Za-z]{2}"
-        let range = email.range(of: regex, options: .regularExpression)
-        let result = range != nil ? true:false
-        return result
-
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]){
+        //let image = info["UIImagePickerControllerEditedImage"] as? UIImage
+        selectedImage = info["UIImagePickerControllerOriginalImage"] as? UIImage
+        self.imageProfile.image = selectedImage
+        self.dismiss(animated: true, completion: nil);
     }
+    
     
     //alert message function
     func alert(error: String, message: String){
@@ -82,11 +140,13 @@ class editVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource, UII
         self.present(alert,animated: true, completion: nil)
     }
     
-
     //clicked save button
     @IBAction func save_clicked(_ sender: Any) {
-            print("save clicked")
+        print("save clicked")
+        
     }
+    
+    
     //clicked cancel button
     @IBAction func cancel_clicked(_ sender: Any) {
         self.view.endEditing(true)

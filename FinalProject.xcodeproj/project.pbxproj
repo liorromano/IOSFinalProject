@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		06C50B811FF279800022F8F2 /* ModelFirebasePost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C50B801FF279800022F8F2 /* ModelFirebasePost.swift */; };
+		06C50B831FF27A360022F8F2 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C50B821FF27A360022F8F2 /* Post.swift */; };
+		06C50B851FF2A0C10022F8F2 /* uploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06C50B841FF2A0C10022F8F2 /* uploadVC.swift */; };
 		2935AA63A8BB63AE50C94D21 /* Pods_FinalProject.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 323C8731C7EE9DC30892FBF7 /* Pods_FinalProject.framework */; };
 		2C028BDE1FEFB5180024E2E9 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C028BDD1FEFB5180024E2E9 /* Model.swift */; };
 		2C028BE01FEFB6200024E2E9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 2C028BDF1FEFB6200024E2E9 /* GoogleService-Info.plist */; };
@@ -53,6 +56,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		06C50B801FF279800022F8F2 /* ModelFirebasePost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelFirebasePost.swift; sourceTree = "<group>"; };
+		06C50B821FF27A360022F8F2 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
+		06C50B841FF2A0C10022F8F2 /* uploadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = uploadVC.swift; sourceTree = "<group>"; };
 		2C028BDD1FEFB5180024E2E9 /* Model.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		2C028BDF1FEFB6200024E2E9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2C7886E91FE128CC0089B5BF /* Pacifico.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pacifico.ttf; sourceTree = "<group>"; };
@@ -170,6 +176,9 @@
 				84ADACAE1FEBCD5E00B72314 /* PictureCell.swift */,
 				848D91801FEBF23F00838A3C /* PostVC.swift */,
 				848D91821FEBF25E00838A3C /* PostCell.swift */,
+				06C50B801FF279800022F8F2 /* ModelFirebasePost.swift */,
+				06C50B821FF27A360022F8F2 /* Post.swift */,
+				06C50B841FF2A0C10022F8F2 /* uploadVC.swift */,
 			);
 			path = FinalProject;
 			sourceTree = "<group>";
@@ -523,14 +532,17 @@
 				2CC9FF8D1FD9A5B3001D9273 /* SignInVC.swift in Sources */,
 				2CC9FF8F1FD9A5CE001D9273 /* SignUpVC.swift in Sources */,
 				2CA2440D1FE7D622003B3625 /* ModelFirebaseUsers.swift in Sources */,
+				06C50B811FF279800022F8F2 /* ModelFirebasePost.swift in Sources */,
 				2C7886EE1FE13CD30089B5BF /* ProfileCollectionVC.swift in Sources */,
 				2CA2440F1FE7DEC6003B3625 /* User.swift in Sources */,
 				846942C51FE9456500FD8B0F /* editVC.swift in Sources */,
 				848D91831FEBF25E00838A3C /* PostCell.swift in Sources */,
 				2CC9FF5F1FD9A4D7001D9273 /* AppDelegate.swift in Sources */,
+				06C50B831FF27A360022F8F2 /* Post.swift in Sources */,
 				2CC9FF911FD9A5EB001D9273 /* ResetPasswordVC.swift in Sources */,
 				84ADACAF1FEBCD5E00B72314 /* PictureCell.swift in Sources */,
 				8481BC331FEBB344007193BC /* FollowersCell.swift in Sources */,
+				06C50B851FF2A0C10022F8F2 /* uploadVC.swift in Sources */,
 				8481BC311FEBB322007193BC /* FollowersVC.swift in Sources */,
 				2C7886F01FE13D080089B5BF /* ProfileHeaderVC.swift in Sources */,
 			);

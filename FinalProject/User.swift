@@ -17,6 +17,7 @@ class User{
     var uID:String?
     var gender:String?
     var phone:String?
+   // var numberOfPosts:Int
     
     init(userName:String, fullName:String, imageUrl:String? = nil, uID:String? = nil, gender:String? = nil, phone:String? = nil){
         self.userName=userName
@@ -25,6 +26,7 @@ class User{
         self.uID = uID
         self.gender = gender
         self.phone = phone
+        //self.numberOfPosts=0
     }
     
     

@@ -10,9 +10,21 @@ import UIKit
 
 
 class ProfileCollectionVC: UICollectionViewController {
+    //refresher variable
+    var refresher: UIRefreshControl!
+    //size of page
+    var page:Int = 9
+    
+    var uuIDArray = [String]()
+    var picArray = [UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        //pull to refresh
+        refresher = UIRefreshControl()
+        refresher.addTarget(self, action: "refresh", for: UIControlEvents.valueChanged)
+        collectionView?.addSubview(refresher)
         
         
     }
@@ -53,6 +65,13 @@ class ProfileCollectionVC: UICollectionViewController {
             headerView.button.setTitle("edit profile", for: UIControlState.normal)
             return headerView
         }
+    
+    //refreshing func
+    func refresh(){
+        collectionView?.reloadData()
+        
+    }
+    
 
     
     

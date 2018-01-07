@@ -43,21 +43,22 @@ class Model{
     static let instance = Model()
     
    // lazy private var modelSql:ModelSql? = ModelSql()
-    lazy private var modelFirebase:ModelFirebaseUsers? = ModelFirebaseUsers()
+    lazy private var modelFirebaseUsers:ModelFirebaseUsers? = ModelFirebaseUsers()
+    lazy private var modelFirebasePost:ModelFirebasePost? = ModelFirebasePost()
     
     private init(){
         
     }
     
     func addUser(user:User, password: String, email: String ){
-        modelFirebase?.addNewUser(user: user, password: password, email: email ){(error) in
+        modelFirebaseUsers?.addNewUser(user: user, password: password, email: email ){(error) in
             //st.addStudentToLocalDb(database: self.modelSql?.database)
         }
     }
     
     func getUserById(id:String, callback:@escaping (User?)->Void){
         
-        modelFirebase?.getUserById(id: id, callback:{ (user) in
+        modelFirebaseUsers?.getUserById(id: id, callback:{ (user) in
             if(user != nil)
             {
                 callback(user)
@@ -134,7 +135,7 @@ class Model{
     
     func saveImage(image:UIImage, name:String, callback:@escaping (String?)->Void){
         //1. save image to Firebase
-        modelFirebase?.saveImageToFirebase(image: image, name: name, callback: {(url) in
+        modelFirebaseUsers?.saveImageToFirebase(image: image, name: name, callback: {(url) in
             if (url != nil){
                 //2. save image localy
                 self.saveImageToFile(image: image, name: name)
@@ -153,7 +154,7 @@ class Model{
             callback(image)
         }else{
             //2. get the image from Firebase
-            modelFirebase?.getImageFromFirebase(url: urlStr, callback: { (image) in
+            modelFirebaseUsers?.getImageFromFirebase(url: urlStr, callback: { (image) in
                 if (image != nil){
                     //3. save the image localy
                     self.saveImageToFile(image: image!, name: localImageName)
@@ -189,10 +190,10 @@ class Model{
         var userEmailCheck: String?
         var userNameCheck: String?
         
-        modelFirebase?.checkIfUserExistByUserEmail(email: email, callback: { (answer) in
+        modelFirebaseUsers?.checkIfUserExistByUserEmail(email: email, callback: { (answer) in
             userEmailCheck = answer!
             print("userEmailCheck= "+userEmailCheck!)
-            self.modelFirebase?.checkIfUserExistByUserName(userName: userName, callback: { (answer) in
+            self.modelFirebaseUsers?.checkIfUserExistByUserName(userName: userName, callback: { (answer) in
                 userNameCheck = answer!
                 print("userNameCheck= "+userNameCheck!)
                 if((userEmailCheck?.compare("Email exist") == ComparisonResult.orderedSame)&&(userNameCheck?.compare("userName exist") == ComparisonResult.orderedSame)){
@@ -225,11 +226,11 @@ class Model{
     public func checkEmail(email: String, callback:@escaping (Bool?)->Void)
     {
         var userEmailCheck: String?
-        modelFirebase?.checkIfUserExistByUserEmail(email: email, callback: { (answer) in
+        modelFirebaseUsers?.checkIfUserExistByUserEmail(email: email, callback: { (answer) in
             userEmailCheck = answer!
             if(userEmailCheck?.compare("Email exist") == ComparisonResult.orderedSame)
             {
-                self.modelFirebase?.sendResetPassword(email: email)
+                self.modelFirebaseUsers?.sendResetPassword(email: email)
                 callback(true)
             }
             else
@@ -241,16 +242,38 @@ class Model{
     
     public func login (email: String, password: String, callback:@escaping (Bool?)->Void)
     {
-        modelFirebase?.authentication(email: email, password: password, callback: { (answer) in
+        modelFirebaseUsers?.authentication(email: email, password: password, callback: { (answer) in
             callback(answer)
         })
     }
     
     func loggedinUser(callback:@escaping (String?)->Void){
-        modelFirebase?.loggedinUser(callback: { (ans) in
+        modelFirebaseUsers?.loggedinUser(callback: { (ans) in
             callback(ans)
         })
         
     }
+    
+    
+    
+    func addNewPost(post: Post,callback:@escaping (Bool)->Void){
+        
+        modelFirebasePost?.addNewPost(post: post, callback: { (answer) in
+            callback(answer)
+        })
+        
+    }
+    
+    
+   
+
+    
+
+    
+    func getPostById(postID:String , userID:String , callback:@escaping (Post)->Void){
+
+    }
+    
+
     
 }

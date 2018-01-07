@@ -51,23 +51,10 @@ class ModelFirebaseUsers{
         }
     }
     
-    func getStudentById(id:String, callback:@escaping (User)->Void){
-        dataBase?.child("Users").child(id).observeSingleEvent(of: .value, with: { (snapshot) in
-            // Get user value
-            let value = snapshot.value as? NSDictionary
-            let username = value?["userName"] as? String ?? ""
-            print(username)
-            let fullName = value?["fullName"] as? String ?? ""
-            let imageUrl = value?["imageUrl"] as? String ?? ""
-            let user = User(userName: username, fullName: fullName, imageUrl: imageUrl)
-            callback(user)
-        }) { (error) in
-            print(error.localizedDescription)
-        }
-    }
+
     func checkIfUserExistByUserName(userName:String, callback:@escaping (String?)->Void)
     {
-        getStudentById(id: userName, callback: {(user) in
+        getUserById(id: userName, callback: {(user) in
             if (userName.compare(user.userName) == ComparisonResult.orderedSame)
             {
                 print("got into user.userName == userName")
@@ -143,6 +130,7 @@ class ModelFirebaseUsers{
             let fullName = value?["fullName"] as? String ?? ""
             let imageUrl = value?["imageUrl"] as? String ?? ""
             let user = User(userName: username, fullName: fullName, imageUrl: imageUrl)
+ 
             callback(user)
         }) { (error) in
             print(error.localizedDescription)
@@ -153,6 +141,8 @@ class ModelFirebaseUsers{
         callback(Auth.auth().currentUser?.uid)
             
     }
+    
+ 
 
 
 }
