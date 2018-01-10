@@ -136,6 +136,8 @@ class ModelFirebaseUsers{
         }
     }
     
+
+    
    static func loggedinUser(callback:@escaping (String?)->Void){
         callback(Auth.auth().currentUser?.uid)
             
@@ -154,6 +156,47 @@ class ModelFirebaseUsers{
             }
         })
     
+    }
+    
+    static func follow(follower: String, following: String , completionBlock:@escaping (Error?)->Void)
+    {
+        let myRef = Database.database().reference().child("follow").child(follower.appending(following))
+        let follow = Follow(followerUID: follower, followingUID: following, followID: follower.appending(following))
+        myRef.setValue(follow.toJson())
+        myRef.setValue(follow.toJson()){(error, dbref) in
+            completionBlock(error)
+        }
+        
+    }
+    
+    static func unfollow(follower: String, following: String)
+    {
+        let myRef = Database.database().reference().child("follow").child(follower.appending(following))
+        myRef.updateChildValues(["deleted": "true"])
+    }
+    
+    static func getAllFollowsAndObserve(_ lastUpdateDate:Date?, callback:@escaping ([Follow])->Void){
+        print("FB: getAllFollowsAndObserve")
+        let handler = {(snapshot:DataSnapshot) in
+            var follows = [Follow]()
+            for child in snapshot.children.allObjects{
+                if let childData = child as? DataSnapshot{
+                    if let json = childData.value as? Dictionary<String,Any>{
+                        let follow = Follow(json: json)
+                        follows.append(follow)
+                    }
+                }
+            }
+            callback(follows)
+        }
+        let ref = Database.database().reference().child("follow")
+        if (lastUpdateDate != nil){
+            print("q starting at:\(lastUpdateDate!) \(lastUpdateDate!.toFirebase())")
+            let fbQuery = ref.queryOrdered(byChild:"lastUpdate").queryStarting(atValue:lastUpdateDate!.toFirebase())
+            fbQuery.observe(DataEventType.value, with: handler)
+        }else{
+            ref.observe(DataEventType.value, with: handler)
+        }
     }
  
 

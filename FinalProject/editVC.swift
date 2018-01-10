@@ -22,7 +22,6 @@ class editVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource, UII
     
     //button
 
-    @IBOutlet weak var backNavButton: UIBarButtonItem!
     @IBOutlet weak var saveButton: UIButton!
 
     
@@ -150,11 +149,7 @@ class editVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource, UII
     
 
     
-    @IBAction func back_Clicked(_ sender: Any) {
-        self.view.endEditing(true)
-        self.dismiss(animated: true, completion: nil)
-    }
-    //clicked save button
+       //clicked save button
     @IBAction func save_Clicked(_ sender: Any) {
         spinner?.startAnimating()
         //get the user data with connection to firebase

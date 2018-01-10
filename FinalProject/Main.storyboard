@@ -454,11 +454,11 @@
             </objects>
             <point key="canvasLocation" x="1421" y="137"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Feed-->
         <scene sceneID="jlB-ca-Vb7">
             <objects>
                 <navigationController id="nB6-Mx-toH" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="feed" id="BAX-8y-gSs"/>
+                    <tabBarItem key="tabBarItem" title="Feed" id="BAX-8y-gSs"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="bwr-hy-jdh">
                         <rect key="frame" x="0.0" y="20" width="375" height="48"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -501,15 +501,13 @@
                                                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="70" id="rp6-jn-Wq5"/>
                                                             </constraints>
                                                         </imageView>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dvy-wF-q2f">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W6s-BO-lMK">
                                                             <rect key="frame" x="75" y="0.0" width="254" height="70"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                            <state key="normal" title="usernameButton"/>
-                                                            <connections>
-                                                                <segue destination="986-MQ-L5J" kind="push" id="D3T-Ng-Ucr"/>
-                                                            </connections>
-                                                        </button>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="253" verticalHuggingPriority="251" text="2h" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WWI-M2-Oc8" userLabel="hour">
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="254" verticalHuggingPriority="251" text="2h" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WWI-M2-Oc8" userLabel="hour">
                                                             <rect key="frame" x="334" y="0.0" width="15" height="70"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                             <nil key="textColor"/>
@@ -551,12 +549,16 @@
                                     <outlet property="PostImage" destination="6Yf-eR-Pah" id="y4U-MS-4JD"/>
                                     <outlet property="ProfilePicture" destination="f5E-Ee-gIy" id="GFB-rG-HOx"/>
                                     <outlet property="TimeLabel" destination="WWI-M2-Oc8" id="V4h-1c-EAe"/>
-                                    <outlet property="UsernameBtn" destination="dvy-wF-q2f" id="Rzs-xc-QHz"/>
+                                    <outlet property="Username" destination="W6s-BO-lMK" id="J0c-tO-8lg"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
                     </tableView>
                     <navigationItem key="navigationItem" id="6md-0d-lva"/>
+                    <connections>
+                        <segue destination="986-MQ-L5J" kind="push" identifier="GuestSegue" id="has-eS-jGw"/>
+                        <segue destination="xBf-YF-oGc" kind="push" identifier="ProfileSegue" id="tPu-x9-81n"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="obs-O6-N7z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -571,7 +573,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="137" id="4Al-yb-cXn" customClass="FollowersCell" customModule="FinalProject" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FollowCell" rowHeight="137" id="4Al-yb-cXn" customClass="FollowersCell" customModule="FinalProject" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="375" height="137"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4Al-yb-cXn" id="p8p-8q-e0y">
@@ -589,7 +591,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="userName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Kz-bQ-Yyp">
-                                                    <rect key="frame" x="90" y="33" width="177" height="25"/>
+                                                    <rect key="frame" x="90" y="33" width="267" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="25" id="ulu-SI-5K3"/>
                                                     </constraints>
@@ -597,18 +599,6 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RO1-xX-9Zj">
-                                                    <rect key="frame" x="277" y="33" width="80" height="25"/>
-                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="80" id="MBV-S8-9gs"/>
-                                                        <constraint firstAttribute="height" constant="25" id="fah-O4-4uz"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                    <state key="normal" title="Follow">
-                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    </state>
-                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="bottom" secondItem="Aij-LL-6mP" secondAttribute="bottom" constant="5" id="5t3-Dc-xU3"/>
@@ -624,7 +614,6 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="followingButtom" destination="RO1-xX-9Zj" id="aFc-RL-GhC"/>
                                     <outlet property="userImage" destination="Aij-LL-6mP" id="qv1-lR-qdl"/>
                                     <outlet property="usernameLabel" destination="3Kz-bQ-Yyp" id="MUX-Ty-9Td"/>
                                 </connections>
@@ -635,10 +624,11 @@
                             <outlet property="delegate" destination="Djd-Lw-5pK" id="zL0-XG-rJA"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="wHF-zc-GF6"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UqE-tR-IlU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3830" y="-658"/>
+            <point key="canvasLocation" x="3941" y="-698"/>
         </scene>
         <!--UploadVC-->
         <scene sceneID="e0L-ea-ELf">
@@ -713,29 +703,11 @@
             </objects>
             <point key="canvasLocation" x="3207.5" y="1008.5"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="vnG-w7-eoF">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="q7v-H3-vCr" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="xnB-73-5o1">
-                        <rect key="frame" x="0.0" y="20" width="375" height="48"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="JEb-36-acY" kind="relationship" relationship="rootViewController" id="sSm-6a-dBq"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="saA-qS-cce" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3268" y="159"/>
-        </scene>
-        <!--Navigation Controller-->
+        <!--Profile-->
         <scene sceneID="0HW-Aa-exS">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fug-6P-Aw9" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="tabProfile" id="6gn-p4-9og"/>
+                    <tabBarItem key="tabBarItem" title="Profile" id="6gn-p4-9og"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="eQd-VY-7wi">
                         <rect key="frame" x="0.0" y="20" width="375" height="48"/>
@@ -750,11 +722,11 @@
             </objects>
             <point key="canvasLocation" x="1964" y="159"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Upload-->
         <scene sceneID="mHS-wQ-Xi6">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="1PK-fO-JmU" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="camera" id="OgU-0E-CPf"/>
+                    <tabBarItem key="tabBarItem" title="Upload" id="OgU-0E-CPf"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="pOe-PX-7LG">
                         <rect key="frame" x="0.0" y="20" width="375" height="48"/>
@@ -876,15 +848,8 @@
                             <constraint firstItem="Kjw-Bg-PIu" firstAttribute="top" secondItem="byT-Ch-HNH" secondAttribute="bottom" constant="5" id="zNx-1j-U5A"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="5Zu-A7-Yab">
-                        <barButtonItem key="leftBarButtonItem" title="&lt;Back" id="r5g-0R-JAf">
-                            <connections>
-                                <action selector="back_Clicked:" destination="JEb-36-acY" id="zEn-nP-jlS"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="5Zu-A7-Yab"/>
                     <connections>
-                        <outlet property="backNavButton" destination="r5g-0R-JAf" id="dlR-XI-bFB"/>
                         <outlet property="fullNameTxt" destination="a33-Ay-2GU" id="0S8-ai-10X"/>
                         <outlet property="genderTxt" destination="IEi-U8-BXf" id="Ac1-Fl-CwY"/>
                         <outlet property="imageProfile" destination="8KU-Vy-IoN" id="puK-Ki-VFa"/>
@@ -895,7 +860,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xHC-AV-Yeo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3800.5" y="158.5"/>
+            <point key="canvasLocation" x="3362" y="159"/>
         </scene>
         <!--Profile CollectionVC-->
         <scene sceneID="hAU-iw-BUD">
@@ -907,13 +872,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="HfV-0U-GTL">
                             <size key="itemSize" width="65" height="61"/>
-                            <size key="headerReferenceSize" width="50" height="230"/>
+                            <size key="headerReferenceSize" width="50" height="190"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="JS6-ku-rRO" customClass="PictureCell" customModule="FinalProject" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="230" width="106" height="106"/>
+                                <rect key="frame" x="0.0" y="190" width="106" height="106"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="106" height="106"/>
@@ -932,11 +897,11 @@
                             </collectionViewCell>
                         </cells>
                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ProfileHeader" id="u8h-ej-6J8" customClass="ProfileHeaderVC" customModule="FinalProject" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="230"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="190"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ir2-cb-ELa">
-                                    <rect key="frame" x="20" y="48" width="335" height="140"/>
+                                    <rect key="frame" x="20" y="48" width="335" height="111"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="lv4-9A-p2V">
                                             <rect key="frame" x="0.0" y="0.0" width="335" height="80"/>
@@ -983,12 +948,16 @@
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="followers" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EaW-L9-1xE">
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4fO-cl-uAO" userLabel="followers">
                                                                             <rect key="frame" x="0.0" y="33" width="58" height="17"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                            <nil key="textColor"/>
-                                                                            <nil key="highlightedColor"/>
-                                                                        </label>
+                                                                            <state key="normal" title="followers">
+                                                                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <segue destination="Djd-Lw-5pK" kind="push" identifier="ProfileFollowersSegue" id="iHu-03-51J"/>
+                                                                            </connections>
+                                                                        </button>
                                                                     </subviews>
                                                                     <constraints>
                                                                         <constraint firstAttribute="bottom" secondItem="yYX-Ij-Dxr" secondAttribute="bottom" constant="20" symbolic="YES" id="wEU-gX-bSk"/>
@@ -1003,12 +972,16 @@
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="following" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I4J-HV-KKO">
+                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TJr-Xu-ev8">
                                                                             <rect key="frame" x="0.0" y="33" width="58" height="17"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                            <nil key="textColor"/>
-                                                                            <nil key="highlightedColor"/>
-                                                                        </label>
+                                                                            <state key="normal" title="following">
+                                                                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <segue destination="Djd-Lw-5pK" kind="push" identifier="ProfileFollowingSegue" id="zjB-r5-py7"/>
+                                                                            </connections>
+                                                                        </button>
                                                                     </subviews>
                                                                     <constraints>
                                                                         <constraint firstAttribute="bottom" secondItem="U2g-LW-6Ki" secondAttribute="bottom" constant="20" symbolic="YES" id="1FP-0m-8FL"/>
@@ -1022,7 +995,7 @@
                                                                 <constraint firstAttribute="height" constant="21" id="fKl-2z-hYh"/>
                                                             </constraints>
                                                             <connections>
-                                                                <segue destination="q7v-H3-vCr" kind="modal" id="2e1-yE-Kqc"/>
+                                                                <segue destination="JEb-36-acY" kind="push" id="xT6-C1-kVb"/>
                                                             </connections>
                                                         </button>
                                                     </subviews>
@@ -1034,7 +1007,7 @@
                                             </subviews>
                                         </stackView>
                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="aD4-Fu-lh7">
-                                            <rect key="frame" x="0.0" y="90" width="335" height="50"/>
+                                            <rect key="frame" x="0.0" y="90" width="335" height="21"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="last name first name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wpW-Ic-cbK">
                                                     <rect key="frame" x="0.0" y="0.0" width="335" height="21"/>
@@ -1045,18 +1018,8 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="about me" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wcU-ak-bKJ">
-                                                    <rect key="frame" x="0.0" y="29" width="335" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="F2I-8g-PMM"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="wcU-ak-bKJ" secondAttribute="trailing" id="Fkv-Li-b4T"/>
                                                 <constraint firstAttribute="trailing" secondItem="wpW-Ic-cbK" secondAttribute="trailing" id="pTJ-50-OJS"/>
                                             </constraints>
                                         </stackView>
@@ -1074,13 +1037,10 @@
                             </constraints>
                             <connections>
                                 <outlet property="HeaderAvaImg" destination="Paw-ZN-ekg" id="1hy-ID-tXi"/>
-                                <outlet property="HeaderBioLbl" destination="wcU-ak-bKJ" id="f86-wO-PzG"/>
                                 <outlet property="HeaderFullNameLbl" destination="wpW-Ic-cbK" id="bHI-Q1-gpX"/>
                                 <outlet property="button" destination="k5m-fz-zZh" id="27x-Du-KuC"/>
                                 <outlet property="followers" destination="yYX-Ij-Dxr" id="qKk-as-MOn"/>
-                                <outlet property="followersTitle" destination="EaW-L9-1xE" id="loI-fx-odi"/>
                                 <outlet property="following" destination="U2g-LW-6Ki" id="qEP-Yu-cxE"/>
-                                <outlet property="followingTitle" destination="I4J-HV-KKO" id="yXx-bh-3ge"/>
                                 <outlet property="posts" destination="WfV-hh-3wN" id="w1M-mE-9bd"/>
                                 <outlet property="postsTitle" destination="blJ-6W-GLo" id="dJN-Pq-2Bf"/>
                             </connections>
@@ -1103,13 +1063,13 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c6h-00-pyA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2601" y="175"/>
+            <point key="canvasLocation" x="2600.5" y="174.5"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Shopping Map-->
         <scene sceneID="0TW-tJ-Ak9">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="vgd-A5-H41" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="map" id="Y9g-QI-GZ1"/>
+                    <tabBarItem key="tabBarItem" title="Shopping Map" id="Y9g-QI-GZ1"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="irM-8d-vAN">
                         <rect key="frame" x="0.0" y="20" width="375" height="48"/>
@@ -1153,13 +1113,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="eoa-Au-6Ze">
                             <size key="itemSize" width="65" height="61"/>
-                            <size key="headerReferenceSize" width="50" height="230"/>
+                            <size key="headerReferenceSize" width="50" height="179"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
                             <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="GuestCell" id="gAF-us-diF" customClass="PictureCell" customModule="FinalProject" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="230" width="106" height="106"/>
+                                <rect key="frame" x="0.0" y="179" width="106" height="106"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="106" height="106"/>
@@ -1178,7 +1138,7 @@
                             </collectionViewCell>
                         </cells>
                         <collectionReusableView key="sectionHeaderView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="GuestProfileHeaderVC" id="l9Z-Yv-OsX" customClass="GuestProfileHeaderVC" customModule="FinalProject" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="230"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="179"/>
                             <autoresizingMask key="autoresizingMask"/>
                             <subviews>
                                 <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Knk-fJ-BSx">
@@ -1230,12 +1190,16 @@
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="followers" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9h1-O6-MYX">
+                                                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xoz-LD-SIr">
                                                                             <rect key="frame" x="0.0" y="33" width="58" height="17"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                            <nil key="textColor"/>
-                                                                            <nil key="highlightedColor"/>
-                                                                        </label>
+                                                                            <state key="normal" title="followers">
+                                                                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <segue destination="Djd-Lw-5pK" kind="push" identifier="GuestFollowersSegue" id="g42-Yg-kow"/>
+                                                                            </connections>
+                                                                        </button>
                                                                     </subviews>
                                                                     <constraints>
                                                                         <constraint firstAttribute="bottom" secondItem="xRW-XN-qaI" secondAttribute="bottom" constant="20" symbolic="YES" id="Rys-EU-9gQ"/>
@@ -1250,12 +1214,16 @@
                                                                             <nil key="textColor"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="following" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y9b-wZ-Rea">
+                                                                        <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dci-CC-cFv">
                                                                             <rect key="frame" x="0.0" y="33" width="58" height="17"/>
                                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                                            <nil key="textColor"/>
-                                                                            <nil key="highlightedColor"/>
-                                                                        </label>
+                                                                            <state key="normal" title="following">
+                                                                                <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                                            </state>
+                                                                            <connections>
+                                                                                <segue destination="Djd-Lw-5pK" kind="push" identifier="GuestFollowingSegue" id="geL-5d-oim"/>
+                                                                            </connections>
+                                                                        </button>
                                                                     </subviews>
                                                                     <constraints>
                                                                         <constraint firstAttribute="bottom" secondItem="x6A-Qr-tmR" secondAttribute="bottom" constant="20" symbolic="YES" id="wPh-1b-yek"/>
@@ -1271,7 +1239,10 @@
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="21" id="zqx-RU-YFN"/>
                                                             </constraints>
-                                                            <state key="normal" title="FOLLOW"/>
+                                                            <state key="normal" title="Follow"/>
+                                                            <connections>
+                                                                <action selector="FOLLOWBtnClick:" destination="986-MQ-L5J" eventType="touchUpInside" id="36J-Ct-egn"/>
+                                                            </connections>
                                                         </button>
                                                     </subviews>
                                                     <constraints>
@@ -1306,9 +1277,9 @@
                                 <outlet property="HeaderFullNameLbl" destination="CRz-sT-HUE" id="qxg-Fw-cm9"/>
                                 <outlet property="button" destination="MZh-2S-hYU" id="CpZ-DA-xnS"/>
                                 <outlet property="followers" destination="xRW-XN-qaI" id="pk6-ay-Ck1"/>
-                                <outlet property="followersTitle" destination="9h1-O6-MYX" id="Lbh-8s-Eon"/>
+                                <outlet property="followersBtn" destination="xoz-LD-SIr" id="ybC-e1-aOY"/>
                                 <outlet property="following" destination="x6A-Qr-tmR" id="zj6-gp-imv"/>
-                                <outlet property="followingTitle" destination="Y9b-wZ-Rea" id="WwA-ce-xwM"/>
+                                <outlet property="followingBtn" destination="dci-CC-cFv" id="3I4-vb-XuC"/>
                                 <outlet property="posts" destination="l4h-0m-V84" id="hXI-Ua-M2I"/>
                                 <outlet property="postsTitle" destination="EFz-MC-L8l" id="ZEQ-sa-fQS"/>
                             </connections>
@@ -1320,20 +1291,20 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fp7-6y-8Zk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3038" y="-706"/>
+            <point key="canvasLocation" x="3361.5" y="-697.5"/>
         </scene>
     </scenes>
     <resources>
         <image name="UserPicture" width="100" height="89"/>
         <image name="bgGary.jpg" width="1000" height="1000"/>
-        <image name="camera" width="208" height="208"/>
-        <image name="feed" width="42" height="42"/>
-        <image name="map" width="133" height="133"/>
-        <image name="tabProfile" width="170" height="170"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4_7.fullscreen"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="tPu-x9-81n"/>
+        <segue reference="iHu-03-51J"/>
+    </inferredMetricsTieBreakers>
 </document>

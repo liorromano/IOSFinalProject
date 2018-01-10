@@ -25,8 +25,10 @@ class GuestProfileHeaderVC: UICollectionReusableView {
  
  //titles
  @IBOutlet weak var postsTitle: UILabel!
- @IBOutlet weak var followersTitle: UILabel!
- @IBOutlet weak var followingTitle: UILabel!
+
+    @IBOutlet weak var followingBtn: UIButton!
+   
+    @IBOutlet weak var followersBtn: UIButton!
  
  //edit profile/following button
  @IBOutlet weak var button: UIButton!

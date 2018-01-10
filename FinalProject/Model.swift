@@ -25,6 +25,10 @@ class ModelNotificationBase<T>{
         }
     }
     
+    func follow(data:T){
+        NotificationCenter.default.post(name: NSNotification.Name(name!), object: self, userInfo: ["data":data])
+    }
+    
     func post(data:T){
         NotificationCenter.default.post(name: NSNotification.Name(name!), object: self, userInfo: ["data":data])
     }
@@ -32,7 +36,8 @@ class ModelNotificationBase<T>{
 
 class ModelNotification{
     static let PostList = ModelNotificationBase<[Post]>(name: "PostListNotificatio")
-    static let Post = ModelNotificationBase<Post>(name: "PostNotificatio")
+    
+    static let FollowList = ModelNotificationBase<[Follow]>(name: "FollowListNotificatio")
     
     static func removeObserver(observer:Any){
         NotificationCenter.default.removeObserver(observer)
@@ -85,7 +90,6 @@ class Model{
     
     func addUser(user:User, password: String, email: String ){
         ModelFirebaseUsers.addNewUser(user: user, password: password, email: email ){(error) in
-            //st.addStudentToLocalDb(database: self.modelSql?.database)
         }
     }
     
@@ -103,7 +107,7 @@ class Model{
     func getAllPostsAndObserve(){
         print("Model.getAllStudentsAndObserve")
         // get last update date from SQL
-        let lastUpdateDate = Date(timeIntervalSince1970:0) //LastUpdateTable.getLastUpdateDate(database: modelSql?.database, table: Post.POST_TABLE)
+        let lastUpdateDate = LastUpdateTable.getLastUpdateDate(database: modelSql?.database, table: Post.POST_TABLE)
         
         // get all updated records from firebase
         ModelFirebasePost.getAllPostsAndObserve(lastUpdateDate, callback: { (posts) in
@@ -136,6 +140,7 @@ class Model{
           
         })
     }
+    
     
     func saveImage(image:UIImage, name:String, callback:@escaping (String?)->Void){
         //1. save image to Firebase
@@ -285,15 +290,6 @@ class Model{
     }
     
     
-    
-    
-    
-    
-    
-    func getPostById(postID:String , userID:String , callback:@escaping (Post)->Void){
-        
-    }
-    
     func savePostImage(image:UIImage, userName:String, userID:String,postID:Int, callback:@escaping (String?)->Void){
         //1. save image to Firebase
         ModelFirebasePost.saveImageToFirebase(image: image, userID: userID, postID: postID, callback: { (url) in
@@ -349,6 +345,54 @@ class Model{
             }
         }
     }
+    
+    func follow( follower: String, following: String ){
+        ModelFirebaseUsers.follow(follower: follower, following: following) { (error) in
+            
+        }
+    }
+    
+    func unfollow(follower: String, following: String ){
+        ModelFirebaseUsers.unfollow(follower: follower, following: following)
+    }
+    
+    func getAllFollowsAndObserve(){
+        print("Model.getAllFollowsAndObserve")
+        // get last update date from SQL
+        let lastUpdateDate = LastUpdateTable.getLastUpdateDate(database: modelSql?.database, table: Follow.FOLLOW_TABLE)
+        
+        // get all updated records from firebase
+        ModelFirebaseUsers.getAllFollowsAndObserve(lastUpdateDate, callback: { (follows) in
+            //update the local db
+            print("got \(follows.count) new records from FB")
+            var lastUpdate:Date?
+            for follow in follows{
+                follow.addFollowToLocalDb(database: self.modelSql?.database)
+                if lastUpdate == nil{
+                    lastUpdate = follow.lastUpdate
+                }else{
+                    if lastUpdate!.compare(follow.lastUpdate!) == ComparisonResult.orderedAscending{
+                        lastUpdate = follow.lastUpdate
+                    }
+                }
+            }
+            
+            //upadte the last update table
+            if (lastUpdate != nil){
+                LastUpdateTable.setLastUpdate(database: self.modelSql!.database, table: Follow.FOLLOW_TABLE, lastUpdate: lastUpdate!)
+            }
+            
+            //get the complete list from local DB
+            
+            let totalList = Follow.getAllFollowFromLocalDb(database: self.modelSql?.database)
+            print("\(totalList)")
+            
+            ModelNotification.FollowList.follow(data: totalList)
+            
+            
+        })
+    }
+
     
    }
 

@@ -18,6 +18,8 @@ class ProfileCollectionVC: UICollectionViewController {
     var refresher: UIRefreshControl!
     
     var postList = [Post]()
+    var followers = [Follow]()
+    var following = [Follow]()
     var observerId:Any?
     
     var spinner: UIActivityIndicatorView?
@@ -53,9 +55,38 @@ class ProfileCollectionVC: UICollectionViewController {
                 
             }
         }
+        
+        ModelNotification.FollowList.observe{(list) in
+            if(list != nil)
+            {
+                self.followers.removeAll()
+                self.following.removeAll()
+                let follows = list! as [Follow]
+                Model.instance.loggedinUser(callback: { (uID) in
+                    for follow in follows
+                    {
+                        if((follow.followerUID == uID) && (follow.deleted == "false"))
+                        {
+                            self.followers.append(follow)
+                        }
+                        else if((follow.followingUID == uID) && (follow.deleted == "false"))
+                        {
+                            self.following.append(follow)
+                        }
+                    }
+                    
+                    self.spinner?.stopAnimating()
+                    self.collectionView?.reloadData()
+                })
+                
+                
+            }
+        }
+        
+        
         spinner?.startAnimating()
         Model.instance.getAllPostsAndObserve()
-        
+        Model.instance.getAllFollowsAndObserve()
 
         //pull to refresh
         refresher = UIRefreshControl()
@@ -102,6 +133,10 @@ class ProfileCollectionVC: UICollectionViewController {
                 Model.instance.getUserById(id:uID! ) { (user) in
                     headerView.HeaderFullNameLbl.text = user?.fullName
                     headerView.posts.text = String (self.postList.count)
+                    let followers = String(self.followers.count)
+                    headerView.followers.text = followers
+                    let following = String(self.following.count)
+                    headerView.following.text = following
                     //title at the top of the profile page
                     self.navigationItem.title=user?.userName
                     if (user?.imageUrl != nil)
@@ -164,6 +199,23 @@ class ProfileCollectionVC: UICollectionViewController {
                 }
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if segue.identifier == "ProfileFollowingSegue"
+        {
+            let vc = segue.destination as? FollowersVC
+            vc?.followList = following
+            vc?.type = "following"
+        }
+        if segue.identifier == "ProfileFollowersSegue"
+        {
+            let vc = segue.destination as? FollowersVC
+            vc?.followList = followers
+            vc?.type = "followers"
+        }
+    }
+
     
 }
 

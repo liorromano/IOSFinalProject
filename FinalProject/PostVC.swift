@@ -47,10 +47,10 @@ class PostVC: UITableViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?)
     {
-        if segue.destination is GuestProfileVC
+        if segue.identifier == "GuestSegue"
         {
             let vc = segue.destination as? GuestProfileVC
-            vc?.userID = self.userID
+            vc?.userID = userID
         }
     }
     
@@ -81,8 +81,7 @@ class PostVC: UITableViewController {
         cell.TimeLabel.text = self.postList[indexPath.row].lastUpdate?.stringValue
         cell.Description.text = self.postList[indexPath.row].description
         Model.instance.getUserById(id: self.postList[indexPath.row].uID) { (user) in
-            self.userID = self.postList[indexPath.row].uID
-            cell.UsernameBtn.setTitle(user?.userName, for: .normal)
+            cell.Username.text = user?.userName
             if(user?.imageUrl != nil)
             {
                 Model.instance.getImage(urlStr: (user?.imageUrl)!, callback: { (image) in
@@ -93,7 +92,24 @@ class PostVC: UITableViewController {
         Model.instance.getImagePost(urlStr: self.postList[indexPath.row].imageUrl, callback: { (image) in
             cell.PostImage.image = image
         })
-
+        
         return cell
-}
+    }
+    
+    override public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        userID = self.postList[indexPath.row].uID
+        Model.instance.loggedinUser { (uID) in
+            if(uID == self.userID)
+            {
+                self.performSegue(withIdentifier: "ProfileSegue", sender: nil)
+            }
+            else
+            {
+                
+                self.performSegue(withIdentifier: "GuestSegue", sender: nil)
+            }
+        }
+    }
+    
+
 }

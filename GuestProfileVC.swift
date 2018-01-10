@@ -14,11 +14,13 @@ class GuestProfileVC: UICollectionViewController {
     @IBOutlet weak var backBtn: UIBarButtonItem!
 
     var userID:String = ""
-    
+    var followFlag:Bool = false
     
     //refresher variable
     var refresher: UIRefreshControl!
     
+    var followers = [Follow]()
+    var following = [Follow]()
     var postList = [Post]()
     var observerId:Any?
     
@@ -57,9 +59,43 @@ class GuestProfileVC: UICollectionViewController {
                 
             }
         }
+        
+        ModelNotification.FollowList.observe{(list) in
+            if(list != nil)
+            {
+                self.followers.removeAll()
+                self.following.removeAll()
+                let follows = list! as [Follow]
+                    for follow in follows
+                    {
+                        if((follow.followerUID == self.userID) && (follow.deleted == "false"))
+                        {
+                            self.followers.append(follow)
+                        }
+                        else if((follow.followingUID == self.userID)  && (follow.deleted == "false"))
+                        {
+                            self.following.append(follow)
+                        }
+                        Model.instance.loggedinUser(callback: { (uid) in
+                            var s = String(self.userID.appending(uid!) )
+                            if((follow.followID == s)  && (follow.deleted == "false"))
+                            {
+                                self.followFlag = true
+                            }
+                        })
+                        
+                    }
+                    
+                    self.spinner?.stopAnimating()
+                    self.collectionView?.reloadData()
+                
+            }
+        }
+        
+
         spinner?.startAnimating()
         Model.instance.getAllPostsAndObserve()
-        
+        Model.instance.getAllFollowsAndObserve()
         
         //pull to refresh
         refresher = UIRefreshControl()
@@ -105,6 +141,11 @@ class GuestProfileVC: UICollectionViewController {
 
         Model.instance.getUserById(id:userID) { (user) in
                 headerView.HeaderFullNameLbl.text = user?.fullName
+            headerView.posts.text = String (self.postList.count)
+            let followers = String(self.followers.count)
+            headerView.followers.text = followers
+            let following = String(self.following.count)
+            headerView.following.text = following
                 headerView.posts.text = String (self.postList.count)
                 //title at the top of the profile page
                 self.navigationItem.title=user?.userName
@@ -116,8 +157,12 @@ class GuestProfileVC: UICollectionViewController {
                 }
             }
             
-        
-        headerView.button.setTitle("FOLLOW", for: UIControlState.normal)
+        if self.followFlag == false{
+        headerView.button.setTitle("Follow", for: UIControlState.normal)
+        }
+        else{
+       headerView.button.setTitle("UnFollow", for: UIControlState.normal)
+        }
         return headerView
     }
     
@@ -147,8 +192,45 @@ class GuestProfileVC: UICollectionViewController {
         return cell
     }
     
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if segue.identifier == "GuestFollowingSegue"
+        {
+            let vc = segue.destination as? FollowersVC
+            vc?.followList = following
+            vc?.type = "following"
+        }
+        if segue.identifier == "GuestFollowersSegue"
+        {
+            let vc = segue.destination as? FollowersVC
+            vc?.followList = followers
+            vc?.type = "followers"
+        }
+    }
 
     
+    @IBAction func FOLLOWBtnClick(_ sender: Any) {
+     
+        print(self.followFlag)
+        if self.followFlag == false{
+            self.followFlag = true
+            Model.instance.loggedinUser { (loginUserID) in
+                        Model.instance.follow(follower: self.userID, following: loginUserID!)
+                    }
+                refresh()
+            }
+        
+        else if (self.followFlag == true) {
+            self.followFlag = false
+            Model.instance.loggedinUser { (loginUserID) in
+                        Model.instance.unfollow(follower: self.userID, following: loginUserID!)
+                        
+                    }
+    refresh()
+            }
+        }
+
 }
 
 

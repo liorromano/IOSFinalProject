@@ -39,6 +39,10 @@ class ModelSql{
         if Post.createTable(database: database) == false{
             return nil
         }
+        if Follow.createTable(database: database) == false{
+            return nil
+        }
+
         if LastUpdateTable.createTable(database: database) == false{
             return nil
         }
