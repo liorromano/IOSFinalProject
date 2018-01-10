@@ -16,15 +16,17 @@ class Post{
     var lastUpdate:Date?
     var uID:String
     var postID:String?
-    var location:String?
+    var lat:String?
+    var lang:String?
     var description:String?
     
     
-    init(userName:String, imageUrl:String, uID:String, location:String? = nil, description:String? = nil ,postID:String? = nil){
+    init(userName:String, imageUrl:String, uID:String, lat:String? = nil, lang:String? = nil, description:String? = nil ,postID:String? = nil){
         self.userName = userName
         self.imageUrl = imageUrl
         self.uID = uID
-        self.location = location
+        self.lat = lat
+        self.lang = lang
         self.description = description
         self.postID = postID!
         
@@ -34,7 +36,8 @@ class Post{
     init(json:Dictionary<String,Any>){
         userName = json["userName"] as! String
         uID = json["uID"] as! String
-        location = json["location"] as? String
+        lat = json["lat"] as? String
+        lang = json["lang"] as? String
         description = json["description"] as? String
         postID = json["postID"] as? String
         imageUrl=json["imageUrl"] as! String
@@ -47,7 +50,8 @@ class Post{
         var json = Dictionary<String,Any>()
         json["userName"] = userName
         json["uID"] = uID
-        json["location"] = location
+        json["lat"] = lat
+        json["lang"] = lang
         json["description"] = description
         json["postID"] = postID
         json["imageUrl"] = imageUrl

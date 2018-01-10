@@ -16,7 +16,7 @@ class ModelFirebasePost{
     static func addNewPost(post: Post,callback:@escaping (Bool)->Void){
         print("add new post- model firebase post")
         let postNumber = String(describing: post.postID)
-        let ref = Database.database().reference().child("posts").child(post.uID).child(postNumber)
+        let ref = Database.database().reference().child("posts").child(postNumber)
         ref.setValue(post.toJson())
         ref.setValue(post.toJson()){(error, dbref) in
             if (error != nil)
@@ -123,7 +123,7 @@ class ModelFirebasePost{
         ref.removeAllObservers()
     }
     
-    static func getAllPostsAndObserveForProfile(_ lastUpdateDate:Date?, callback:@escaping ([Post])->Void){
+    static func getAllPostsAndObserve(_ lastUpdateDate:Date?, callback:@escaping ([Post])->Void){
         print("FB: getAllPostsAndObserve")
         let handler = {(snapshot:DataSnapshot) in
             var posts = [Post]()
@@ -137,7 +137,7 @@ class ModelFirebasePost{
             }
             callback(posts)
         }
-        let ref = Database.database().reference().child("posts").child((Auth.auth().currentUser?.uid)!)
+        let ref = Database.database().reference().child("posts")
         if (lastUpdateDate != nil){
             print("q starting at:\(lastUpdateDate!) \(lastUpdateDate!.toFirebase())")
             let fbQuery = ref.queryOrdered(byChild:"lastUpdate").queryStarting(atValue:lastUpdateDate!.toFirebase())

@@ -33,7 +33,7 @@ class PostVC: UITableViewController {
             }
         }
         spinner?.startAnimating()
-        Model.instance.getAllPostsAndObserve(type: "all")
+        Model.instance.getAllPostsAndObserve()
     }
     
     deinit{

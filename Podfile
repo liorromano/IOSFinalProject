@@ -10,6 +10,8 @@ target 'FinalProject' do
 	pod 'Firebase/Database'
 	pod 'Firebase/Auth'
 	pod 'Firebase/Storage'
+	pod 'GoogleMaps'
+	pod 'GooglePlaces'
 
   target 'FinalProjectTests' do
     inherit! :search_paths

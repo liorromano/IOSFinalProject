@@ -36,14 +36,25 @@ class ProfileCollectionVC: UICollectionViewController {
         ModelNotification.PostList.observe{(list) in
             if(list != nil)
             {
-                self.postList = list!
-                self.spinner?.stopAnimating()
-                self.collectionView?.reloadData()
+                self.postList.removeAll()
+                let posts = list! as [Post]
+                Model.instance.loggedinUser(callback: { (uID) in
+                    for post in posts
+                    {
+                        if(post.uID == uID)
+                        {
+                           self.postList.append(post)
+                        }
+                    }
+                    self.spinner?.stopAnimating()
+                    self.collectionView?.reloadData()
+                })
+                
                 
             }
         }
         spinner?.startAnimating()
-        Model.instance.getAllPostsAndObserve(type: "profile")
+        Model.instance.getAllPostsAndObserve()
         
 
         //pull to refresh

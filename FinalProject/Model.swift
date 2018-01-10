@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import CoreLocation
 
 class ModelNotificationBase<T>{
     var name:String?
@@ -99,13 +100,13 @@ class Model{
     }
 
     
-    func getAllPostsAndObserve(type: String){
+    func getAllPostsAndObserve(){
         print("Model.getAllStudentsAndObserve")
         // get last update date from SQL
         let lastUpdateDate = Date(timeIntervalSince1970:0) //LastUpdateTable.getLastUpdateDate(database: modelSql?.database, table: Post.POST_TABLE)
         
         // get all updated records from firebase
-        ModelFirebasePost.getAllPostsAndObserveForProfile(lastUpdateDate, callback: { (posts) in
+        ModelFirebasePost.getAllPostsAndObserve(lastUpdateDate, callback: { (posts) in
             //update the local db
             print("got \(posts.count) new records from FB")
             var lastUpdate:Date?
@@ -126,23 +127,12 @@ class Model{
             }
             
             //get the complete list from local DB
-            if (type == "profile")
-            {
-                self.loggedinUser(callback: { (ans) in
-                    let totalList = Post.getAllPostsFromLocalDb(type: ans!, database: self.modelSql?.database)
-                    print("\(totalList)")
-                    
-                    ModelNotification.PostList.post(data: totalList)
-                })
-
-            }
-            else
-            {
-                let totalList = Post.getAllPostsFromLocalDb(type: "all", database: self.modelSql?.database)
+ 
+                let totalList = Post.getAllPostsFromLocalDb(database: self.modelSql?.database)
                 print("\(totalList)")
                 
                 ModelNotification.PostList.post(data: totalList)
-            }
+            
           
         })
     }
@@ -360,7 +350,7 @@ class Model{
         }
     }
     
-}
+   }
 
 
 

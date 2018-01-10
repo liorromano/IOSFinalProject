@@ -7,14 +7,13 @@
 //
 
 import UIKit
-
+import CoreLocation
 class StartVC: UIViewController {
     
     var spinner: UIActivityIndicatorView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         
         //Pacifico font of label
         //SignInLabel.font = UIFont(name: "Pacifico", size: 25)
