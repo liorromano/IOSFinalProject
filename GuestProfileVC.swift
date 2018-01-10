@@ -11,8 +11,10 @@ import UIKit
 
 class GuestProfileVC: UICollectionViewController {
     
+    @IBOutlet weak var backBtn: UIBarButtonItem!
+
+    var userID:String = ""
     
-    @IBOutlet weak var LogoutBtn: UIBarButtonItem!
     
     //refresher variable
     var refresher: UIRefreshControl!
@@ -21,6 +23,8 @@ class GuestProfileVC: UICollectionViewController {
     var observerId:Any?
     
     var spinner: UIActivityIndicatorView?
+    
+  
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,17 +42,17 @@ class GuestProfileVC: UICollectionViewController {
             {
                 self.postList.removeAll()
                 let posts = list! as [Post]
-                Model.instance.loggedinUser(callback: { (uID) in
+             
                     for post in posts
                     {
-                        if(post.uID == uID)
+                        if(post.uID == self.userID)
                         {
                             self.postList.append(post)
                         }
                     }
                     self.spinner?.stopAnimating()
                     self.collectionView?.reloadData()
-                })
+                
                 
                 
             }
@@ -59,7 +63,7 @@ class GuestProfileVC: UICollectionViewController {
         
         //pull to refresh
         refresher = UIRefreshControl()
-        refresher.addTarget(self, action: #selector(ProfileCollectionVC.refresh), for: UIControlEvents.valueChanged)
+        refresher.addTarget(self, action: #selector(GuestProfileVC.refresh), for: UIControlEvents.valueChanged)
         collectionView?.addSubview(refresher)
         
         
@@ -96,10 +100,10 @@ class GuestProfileVC: UICollectionViewController {
         print("second")
         
         //define haeder
-        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "ProfileHeader", for: indexPath) as! ProfileHeaderVC
+        let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "GuestProfileHeaderVC", for: indexPath) as! GuestProfileHeaderVC
         //get the user data with connection to firebase
-        Model.instance.loggedinUser(callback: { (uID) in
-            Model.instance.getUserById(id:uID! ) { (user) in
+
+        Model.instance.getUserById(id:userID) { (user) in
                 headerView.HeaderFullNameLbl.text = user?.fullName
                 headerView.posts.text = String (self.postList.count)
                 //title at the top of the profile page
@@ -112,8 +116,8 @@ class GuestProfileVC: UICollectionViewController {
                 }
             }
             
-        })
-        headerView.button.setTitle("edit profile", for: UIControlState.normal)
+        
+        headerView.button.setTitle("FOLLOW", for: UIControlState.normal)
         return headerView
     }
     
@@ -136,34 +140,14 @@ class GuestProfileVC: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath as IndexPath) as! PictureCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "GuestCell", for: indexPath as IndexPath) as! PictureCell
         Model.instance.getImage(urlStr: self.postList[indexPath.row].imageUrl, callback: { (image) in
             cell.picturePost.image = image
         })
         return cell
     }
     
-    @IBAction func logOutBtn_clicked(_ sender: Any) {
-        spinner?.startAnimating()
-        Model.instance.logOut { (ans) in
-            if(ans == true)
-            {
-                print ("logged out")
-                self.spinner?.stopAnimating()
-                let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                let newViewController = storyBoard.instantiateViewController(withIdentifier: "LoginVC")
-                self.present(newViewController, animated: true, completion: nil)
-            }
-            else{
-                print("not logged out")
-                self.spinner?.stopAnimating()
-                let alert = UIAlertController(title: "Error", message: "Can not logout", preferredStyle: UIAlertControllerStyle.alert)
-                let ok = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil)
-                alert.addAction(ok)
-                self.present(alert, animated: true, completion: nil)
-            }
-        }
-    }
+
     
 }
 

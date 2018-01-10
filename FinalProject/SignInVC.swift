@@ -46,6 +46,8 @@ class SignInVC: UIViewController {
 
     }
 
+    @IBAction func userNameClick(_ sender: Any) {
+    }
     //click sign in button
     @IBAction func signInBtn_click(_ sender: Any) {
         print("sign in pressed")

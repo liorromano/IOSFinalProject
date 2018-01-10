@@ -12,6 +12,7 @@ class PostVC: UITableViewController {
     var observerId:Any?
     var postList = [Post]()
     var spinner: UIActivityIndicatorView?
+    var userID:String = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +42,20 @@ class PostVC: UITableViewController {
             ModelNotification.removeObserver(observer: observerId!)
         }
     }
+    
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if segue.destination is GuestProfileVC
+        {
+            let vc = segue.destination as? GuestProfileVC
+            vc?.userID = self.userID
+        }
+    }
+    
+    
+    
     func postListDidUpdate(notification:NSNotification){
         self.postList = notification.userInfo?["posts"] as! [Post]
         self.tableView!.reloadData()
@@ -66,6 +81,7 @@ class PostVC: UITableViewController {
         cell.TimeLabel.text = self.postList[indexPath.row].lastUpdate?.stringValue
         cell.Description.text = self.postList[indexPath.row].description
         Model.instance.getUserById(id: self.postList[indexPath.row].uID) { (user) in
+            self.userID = self.postList[indexPath.row].uID
             cell.UsernameBtn.setTitle(user?.userName, for: .normal)
             if(user?.imageUrl != nil)
             {
