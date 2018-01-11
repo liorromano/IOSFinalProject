@@ -26,11 +26,20 @@ class GuestProfileHeaderVC: UICollectionReusableView {
  //titles
  @IBOutlet weak var postsTitle: UILabel!
 
-    @IBOutlet weak var followingBtn: UIButton!
+ @IBOutlet weak var followingBtn: UIButton!
    
-    @IBOutlet weak var followersBtn: UIButton!
+ @IBOutlet weak var followersBtn: UIButton!
  
  //edit profile/following button
  @IBOutlet weak var button: UIButton!
+    
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        //round ava
+        HeaderAvaImg.layer.cornerRadius = HeaderAvaImg.frame.size.width / 2
+        HeaderAvaImg.clipsToBounds = true
+    }
     
 }

@@ -22,6 +22,7 @@ class GuestProfileVC: UICollectionViewController {
     var followers = [Follow]()
     var following = [Follow]()
     var postList = [Post]()
+    var post: Post?
     var observerId:Any?
     
     var spinner: UIActivityIndicatorView?
@@ -207,6 +208,11 @@ class GuestProfileVC: UICollectionViewController {
             vc?.followList = followers
             vc?.type = "followers"
         }
+        if segue.identifier == "GuestPostLarge"
+        {
+            let vc = segue.destination as? OnePostVC
+            vc?.post = post
+        }
     }
 
     
@@ -230,6 +236,12 @@ class GuestProfileVC: UICollectionViewController {
     refresh()
             }
         }
+    
+    override public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        post = self.postList[indexPath.row]
+        self.performSegue(withIdentifier: "GuestPostLarge", sender: nil)
+    }
+
 
 }
 

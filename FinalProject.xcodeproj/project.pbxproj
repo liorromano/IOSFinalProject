@@ -21,8 +21,6 @@
 		2C41615B1FFD49C000ED3956 /* StartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C41615A1FFD49C000ED3956 /* StartVC.swift */; };
 		2C459CAA20061D05002F203D /* Follow+sql.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C459CA920061D05002F203D /* Follow+sql.swift */; };
 		2C459CAC20062FA0002F203D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2C459CAB20062FA0002F203D /* Main.storyboard */; };
-		2C7886EA1FE128CC0089B5BF /* Pacifico.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2C7886E91FE128CC0089B5BF /* Pacifico.ttf */; };
-		2C7886EC1FE12D4C0089B5BF /* bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2C7886EB1FE12D4C0089B5BF /* bg.jpg */; };
 		2C7886EE1FE13CD30089B5BF /* ProfileCollectionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7886ED1FE13CD30089B5BF /* ProfileCollectionVC.swift */; };
 		2C7886F01FE13D080089B5BF /* ProfileHeaderVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C7886EF1FE13D080089B5BF /* ProfileHeaderVC.swift */; };
 		2C79FAF91FFD1C6100959B8F /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C79FAF81FFD1C6100959B8F /* TabBarVC.swift */; };
@@ -39,6 +37,8 @@
 		2CC9FF8F1FD9A5CE001D9273 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC9FF8E1FD9A5CE001D9273 /* SignUpVC.swift */; };
 		2CC9FF911FD9A5EB001D9273 /* ResetPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CC9FF901FD9A5EB001D9273 /* ResetPasswordVC.swift */; };
 		2CE90DA020039684007B2513 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE90D9F20039684007B2513 /* MapVC.swift */; };
+		2CEDF37F20078D98006B6934 /* OnePostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEDF37E20078D98006B6934 /* OnePostVC.swift */; };
+		2CEDF38120078DB5006B6934 /* OnePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEDF38020078DB5006B6934 /* OnePostCell.swift */; };
 		846942C51FE9456500FD8B0F /* editVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846942C41FE9456500FD8B0F /* editVC.swift */; };
 		8481BC311FEBB322007193BC /* FollowersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8481BC301FEBB322007193BC /* FollowersVC.swift */; };
 		8481BC331FEBB344007193BC /* FollowersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8481BC321FEBB344007193BC /* FollowersCell.swift */; };
@@ -81,8 +81,6 @@
 		2C41615A1FFD49C000ED3956 /* StartVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StartVC.swift; sourceTree = "<group>"; };
 		2C459CA920061D05002F203D /* Follow+sql.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Follow+sql.swift"; path = "../Follow+sql.swift"; sourceTree = "<group>"; };
 		2C459CAB20062FA0002F203D /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		2C7886E91FE128CC0089B5BF /* Pacifico.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Pacifico.ttf; sourceTree = "<group>"; };
-		2C7886EB1FE12D4C0089B5BF /* bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = bg.jpg; sourceTree = "<group>"; };
 		2C7886ED1FE13CD30089B5BF /* ProfileCollectionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileCollectionVC.swift; sourceTree = "<group>"; };
 		2C7886EF1FE13D080089B5BF /* ProfileHeaderVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileHeaderVC.swift; sourceTree = "<group>"; };
 		2C79FAF81FFD1C6100959B8F /* TabBarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
@@ -105,6 +103,8 @@
 		2CC9FF8E1FD9A5CE001D9273 /* SignUpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		2CC9FF901FD9A5EB001D9273 /* ResetPasswordVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordVC.swift; sourceTree = "<group>"; };
 		2CE90D9F20039684007B2513 /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
+		2CEDF37E20078D98006B6934 /* OnePostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnePostVC.swift; sourceTree = "<group>"; };
+		2CEDF38020078DB5006B6934 /* OnePostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnePostCell.swift; sourceTree = "<group>"; };
 		323C8731C7EE9DC30892FBF7 /* Pods_FinalProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FinalProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		353492076D99391E29BE1C4D /* Pods-FinalProjectUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProjectUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProjectUITests/Pods-FinalProjectUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		4F9D2E6829FBC6DA18CB9DF7 /* Pods-FinalProjectUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProjectUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProjectUITests/Pods-FinalProjectUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -112,7 +112,6 @@
 		6BA43C79FFAD3E993AEB1ACF /* Pods_FinalProjectUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FinalProjectUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C26E4160AF2E012C2B5E4B7 /* Pods-FinalProject.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProject.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProject/Pods-FinalProject.debug.xcconfig"; sourceTree = "<group>"; };
 		846942C41FE9456500FD8B0F /* editVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = editVC.swift; sourceTree = "<group>"; };
-		846C3A6C1FEBEC870001E076 /* bgGary.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = bgGary.jpg; path = ../../bgGary.jpg; sourceTree = "<group>"; };
 		8481BC301FEBB322007193BC /* FollowersVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersVC.swift; sourceTree = "<group>"; };
 		8481BC321FEBB344007193BC /* FollowersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersCell.swift; sourceTree = "<group>"; };
 		848D91801FEBF23F00838A3C /* PostVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostVC.swift; sourceTree = "<group>"; };
@@ -178,42 +177,41 @@
 			isa = PBXGroup;
 			children = (
 				2C459CAB20062FA0002F203D /* Main.storyboard */,
+				2C41615A1FFD49C000ED3956 /* StartVC.swift */,
+				2CA2440E1FE7DEC6003B3625 /* User.swift */,
 				2C459CA920061D05002F203D /* Follow+sql.swift */,
 				2C94CAE920050501005F594B /* Follow.swift */,
-				2C3218C21FF926480051F42B /* FinalProject-Bridging-H eader.h */,
-				2C3218B91FF9208D0051F42B /* LastUpdateTable.swift */,
+				8481BC301FEBB322007193BC /* FollowersVC.swift */,
+				8481BC321FEBB344007193BC /* FollowersCell.swift */,
 				2C3218BA1FF9208D0051F42B /* Post+sql.swift */,
+				848D91801FEBF23F00838A3C /* PostVC.swift */,
+				848D91821FEBF25E00838A3C /* PostCell.swift */,
+				2CEDF37E20078D98006B6934 /* OnePostVC.swift */,
+				2CEDF38020078DB5006B6934 /* OnePostCell.swift */,
+				06C50B821FF27A360022F8F2 /* Post.swift */,
+				2C7886ED1FE13CD30089B5BF /* ProfileCollectionVC.swift */,
+				2C7886EF1FE13D080089B5BF /* ProfileHeaderVC.swift */,
+				84ADACAE1FEBCD5E00B72314 /* PictureCell.swift */,
+				2CC577822003D0FB00B953B6 /* GuestProfileVC.swift */,
+				06D962672004CC1500585CDD /* GuestProfileHeaderVC.swift */,
+				2C79FAF81FFD1C6100959B8F /* TabBarVC.swift */,
+				06C50B841FF2A0C10022F8F2 /* uploadVC.swift */,
+				2CE90D9F20039684007B2513 /* MapVC.swift */,
+				2CC9FF8C1FD9A5B3001D9273 /* SignInVC.swift */,
+				846942C41FE9456500FD8B0F /* editVC.swift */,
+				2CC9FF8E1FD9A5CE001D9273 /* SignUpVC.swift */,
+				2CC9FF901FD9A5EB001D9273 /* ResetPasswordVC.swift */,
+				2C3218B91FF9208D0051F42B /* LastUpdateTable.swift */,
 				2C3218BB1FF9208D0051F42B /* ModelSql.swift */,
-				2C028BDF1FEFB6200024E2E9 /* GoogleService-Info.plist */,
 				2C028BDD1FEFB5180024E2E9 /* Model.swift */,
+				2CA2440C1FE7D622003B3625 /* ModelFirebaseUsers.swift */,
+				06C50B801FF279800022F8F2 /* ModelFirebasePost.swift */,
+				2C3218C21FF926480051F42B /* FinalProject-Bridging-H eader.h */,
+				2C028BDF1FEFB6200024E2E9 /* GoogleService-Info.plist */,
 				2CC9FF5E1FD9A4D7001D9273 /* AppDelegate.swift */,
 				2CC9FF651FD9A4D7001D9273 /* Assets.xcassets */,
 				2CC9FF671FD9A4D7001D9273 /* LaunchScreen.storyboard */,
 				2CC9FF6A1FD9A4D7001D9273 /* Info.plist */,
-				2CC9FF8C1FD9A5B3001D9273 /* SignInVC.swift */,
-				2CC9FF8E1FD9A5CE001D9273 /* SignUpVC.swift */,
-				2CC9FF901FD9A5EB001D9273 /* ResetPasswordVC.swift */,
-				2C7886EB1FE12D4C0089B5BF /* bg.jpg */,
-				846C3A6C1FEBEC870001E076 /* bgGary.jpg */,
-				2C7886E91FE128CC0089B5BF /* Pacifico.ttf */,
-				2C7886ED1FE13CD30089B5BF /* ProfileCollectionVC.swift */,
-				2C7886EF1FE13D080089B5BF /* ProfileHeaderVC.swift */,
-				2CA2440C1FE7D622003B3625 /* ModelFirebaseUsers.swift */,
-				2CA2440E1FE7DEC6003B3625 /* User.swift */,
-				846942C41FE9456500FD8B0F /* editVC.swift */,
-				8481BC301FEBB322007193BC /* FollowersVC.swift */,
-				8481BC321FEBB344007193BC /* FollowersCell.swift */,
-				84ADACAE1FEBCD5E00B72314 /* PictureCell.swift */,
-				848D91801FEBF23F00838A3C /* PostVC.swift */,
-				848D91821FEBF25E00838A3C /* PostCell.swift */,
-				06C50B801FF279800022F8F2 /* ModelFirebasePost.swift */,
-				06C50B821FF27A360022F8F2 /* Post.swift */,
-				06C50B841FF2A0C10022F8F2 /* uploadVC.swift */,
-				2C79FAF81FFD1C6100959B8F /* TabBarVC.swift */,
-				2C41615A1FFD49C000ED3956 /* StartVC.swift */,
-				2CE90D9F20039684007B2513 /* MapVC.swift */,
-				2CC577822003D0FB00B953B6 /* GuestProfileVC.swift */,
-				06D962672004CC1500585CDD /* GuestProfileHeaderVC.swift */,
 			);
 			path = FinalProject;
 			sourceTree = "<group>";
@@ -378,11 +376,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2C7886EC1FE12D4C0089B5BF /* bg.jpg in Resources */,
 				2CC9FF691FD9A4D7001D9273 /* LaunchScreen.storyboard in Resources */,
 				2CC9FF661FD9A4D7001D9273 /* Assets.xcassets in Resources */,
 				2C459CAC20062FA0002F203D /* Main.storyboard in Resources */,
-				2C7886EA1FE128CC0089B5BF /* Pacifico.ttf in Resources */,
 				2C028BE01FEFB6200024E2E9 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -574,6 +570,7 @@
 				2C41615B1FFD49C000ED3956 /* StartVC.swift in Sources */,
 				2CC9FF8F1FD9A5CE001D9273 /* SignUpVC.swift in Sources */,
 				2CA2440D1FE7D622003B3625 /* ModelFirebaseUsers.swift in Sources */,
+				2CEDF37F20078D98006B6934 /* OnePostVC.swift in Sources */,
 				06C50B811FF279800022F8F2 /* ModelFirebasePost.swift in Sources */,
 				2C3218BC1FF9208D0051F42B /* LastUpdateTable.swift in Sources */,
 				2C7886EE1FE13CD30089B5BF /* ProfileCollectionVC.swift in Sources */,
@@ -591,6 +588,7 @@
 				8481BC331FEBB344007193BC /* FollowersCell.swift in Sources */,
 				2C3218BE1FF9208D0051F42B /* ModelSql.swift in Sources */,
 				2C94CAEA20050501005F594B /* Follow.swift in Sources */,
+				2CEDF38120078DB5006B6934 /* OnePostCell.swift in Sources */,
 				06C50B851FF2A0C10022F8F2 /* uploadVC.swift in Sources */,
 				8481BC311FEBB322007193BC /* FollowersVC.swift in Sources */,
 				2C3218BD1FF9208D0051F42B /* Post+sql.swift in Sources */,

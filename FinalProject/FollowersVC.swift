@@ -12,7 +12,7 @@ class FollowersVC: UITableViewController {
     
     var followList = [Follow]()
     var type: String?
-
+    var userId: String?
     
     
     override func viewDidLoad() {
@@ -66,9 +66,38 @@ class FollowersVC: UITableViewController {
         
         }
         return cell
-}
+    }
     
-   
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
+    {
+        if segue.identifier == "FollowGuestSegue"
+        {
+            let vc = segue.destination as? GuestProfileVC
+            vc?.userID = userId!
+        }
+    }
+    
+    override public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+        if(type == "followers")
+        {
+            userId = self.followList[indexPath.row].followingUID
+        }
+        if (type == "following")
+        {
+            userId = self.followList[indexPath.row].followerUID
+        }
+        Model.instance.loggedinUser { (uID) in
+            if(uID == self.userId)
+            {
+                self.performSegue(withIdentifier: "FollowProfileSegue", sender: nil)
+            }
+            else
+            {
+                
+                self.performSegue(withIdentifier: "FollowGuestSegue", sender: nil)
+            }
+        }
+    }
     
     
 }

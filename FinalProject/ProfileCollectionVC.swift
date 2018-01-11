@@ -21,6 +21,7 @@ class ProfileCollectionVC: UICollectionViewController {
     var followers = [Follow]()
     var following = [Follow]()
     var observerId:Any?
+    var post: Post?
     
     var spinner: UIActivityIndicatorView?
     
@@ -74,7 +75,6 @@ class ProfileCollectionVC: UICollectionViewController {
                             self.following.append(follow)
                         }
                     }
-                    
                     self.spinner?.stopAnimating()
                     self.collectionView?.reloadData()
                 })
@@ -149,6 +149,7 @@ class ProfileCollectionVC: UICollectionViewController {
                
             })
             headerView.button.setTitle("edit profile", for: UIControlState.normal)
+            self.spinner?.stopAnimating()
             return headerView
         }
     
@@ -214,6 +215,16 @@ class ProfileCollectionVC: UICollectionViewController {
             vc?.followList = followers
             vc?.type = "followers"
         }
+        if segue.identifier == "ProfilePostLarge"
+        {
+            let vc = segue.destination as? OnePostVC
+            vc?.post = post
+        }
+        
+    }
+    override public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        post = self.postList[indexPath.row]
+        self.performSegue(withIdentifier: "ProfilePostLarge", sender: nil)
     }
 
     

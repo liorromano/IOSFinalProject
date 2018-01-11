@@ -15,7 +15,6 @@ class ProfileHeaderVC: UICollectionReusableView {
     
     //labels
     @IBOutlet weak var HeaderFullNameLbl: UILabel!
-    @IBOutlet weak var HeaderBioLbl: UILabel!
     
     //numbers labels
     @IBOutlet weak var posts: UILabel!
@@ -24,12 +23,19 @@ class ProfileHeaderVC: UICollectionReusableView {
     
     //titles
     @IBOutlet weak var postsTitle: UILabel!
-    @IBOutlet weak var followersTitle: UILabel!
-    @IBOutlet weak var followingTitle: UILabel!
+    @IBOutlet weak var followingBtn: UIButton!
+    
+    @IBOutlet weak var followersBtn: UIButton!
     
     //edit profile/following button
     @IBOutlet weak var button: UIButton!
  
     
-   
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        
+        //round ava
+        HeaderAvaImg.layer.cornerRadius = HeaderAvaImg.frame.size.width / 2
+        HeaderAvaImg.clipsToBounds = true
+    }
 }
