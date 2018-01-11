@@ -129,7 +129,7 @@ class SignUpVC: UIViewController, UIImagePickerControllerDelegate, UINavigationC
                         Model.instance.addUser(user: user, password: self.SignUpPasswordTxt.text!, email: self.SignUpEmailTxt.text!)
                         self.spinner?.stopAnimating()
                         self.resetForm()
-                        self.alerts(writeTitle: "Confirmation", writeMessage: "new user was added")
+                        self.dismiss(animated: true, completion: nil)
                     }
                 }
                 else if(self.checkIfExist?.compare("both exist") == ComparisonResult.orderedSame){

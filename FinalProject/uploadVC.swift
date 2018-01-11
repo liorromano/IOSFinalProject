@@ -54,6 +54,7 @@ class uploadVC: UIViewController ,UIImagePickerControllerDelegate, UINavigationC
         spinner?.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.whiteLarge
         picImage.addSubview(spinner!)
         
+        
     }
     
     //hide keyboard function

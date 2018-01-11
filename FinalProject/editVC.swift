@@ -22,6 +22,7 @@ class editVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource, UII
     
     //button
 
+    @IBOutlet weak var backBtn: UIBarButtonItem!
     @IBOutlet weak var saveButton: UIButton!
 
     
@@ -241,4 +242,7 @@ class editVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource, UII
         self.view.endEditing(true)
     }
     
+    @IBAction func backClicked(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
 }

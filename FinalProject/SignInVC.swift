@@ -27,7 +27,7 @@ class SignInVC: UIViewController {
         super.viewDidLoad()
         
         //Pacifico font of label
-        SignInLabel.font = UIFont(name: "Pacifico", size: 25)
+        SignInLabel.font = UIFont(name: "Pacifico", size: 35)
         
         
         //background
@@ -46,8 +46,6 @@ class SignInVC: UIViewController {
 
     }
 
-    @IBAction func userNameClick(_ sender: Any) {
-    }
     //click sign in button
     @IBAction func signInBtn_click(_ sender: Any) {
         print("sign in pressed")
