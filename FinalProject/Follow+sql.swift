@@ -1,9 +1,9 @@
 //
-//  Student+sql.swift
-//  TestFb
+//  Follow+sql.swift
+//  FinalProject
 //
-//  Created by Eliav Menachi on 21/12/2016.
-//  Copyright © 2016 menachi. All rights reserved.
+//  Created by Romano on 09/01/2018.
+//  Copyright © 2018 Romano. All rights reserved.
 //
 
 import Foundation

@@ -15,7 +15,6 @@ class editVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource, UII
     //UI objects
     @IBOutlet weak var imageProfile: UIImageView!
     @IBOutlet weak var fullNameTxt: UITextField!
-    @IBOutlet weak var aboutMeTxt: UITextView!
     @IBOutlet weak var titleLbl:UILabel!
     @IBOutlet weak var telTxt: UITextField!
     @IBOutlet weak var genderTxt: UITextField!

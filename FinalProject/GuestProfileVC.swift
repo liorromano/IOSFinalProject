@@ -78,7 +78,7 @@ class GuestProfileVC: UICollectionViewController {
                             self.following.append(follow)
                         }
                         Model.instance.loggedinUser(callback: { (uid) in
-                            var s = String(self.userID.appending(uid!) )
+                            let s = String(self.userID.appending(uid!) )
                             if((follow.followID == s)  && (follow.deleted == "false"))
                             {
                                 self.followFlag = true

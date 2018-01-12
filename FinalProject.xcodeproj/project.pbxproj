@@ -40,6 +40,7 @@
 		2CE90DA020039684007B2513 /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE90D9F20039684007B2513 /* MapVC.swift */; };
 		2CEDF37F20078D98006B6934 /* OnePostVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEDF37E20078D98006B6934 /* OnePostVC.swift */; };
 		2CEDF38120078DB5006B6934 /* OnePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CEDF38020078DB5006B6934 /* OnePostCell.swift */; };
+		2CF951BD2008F99E0082D091 /* Date+firebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CF951BC2008F99E0082D091 /* Date+firebase.swift */; };
 		846942C51FE9456500FD8B0F /* editVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846942C41FE9456500FD8B0F /* editVC.swift */; };
 		8481BC311FEBB322007193BC /* FollowersVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8481BC301FEBB322007193BC /* FollowersVC.swift */; };
 		8481BC331FEBB344007193BC /* FollowersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8481BC321FEBB344007193BC /* FollowersCell.swift */; };
@@ -107,6 +108,7 @@
 		2CE90D9F20039684007B2513 /* MapVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		2CEDF37E20078D98006B6934 /* OnePostVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnePostVC.swift; sourceTree = "<group>"; };
 		2CEDF38020078DB5006B6934 /* OnePostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OnePostCell.swift; sourceTree = "<group>"; };
+		2CF951BC2008F99E0082D091 /* Date+firebase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+firebase.swift"; sourceTree = "<group>"; };
 		323C8731C7EE9DC30892FBF7 /* Pods_FinalProject.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FinalProject.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		353492076D99391E29BE1C4D /* Pods-FinalProjectUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProjectUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProjectUITests/Pods-FinalProjectUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		4F9D2E6829FBC6DA18CB9DF7 /* Pods-FinalProjectUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FinalProjectUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-FinalProjectUITests/Pods-FinalProjectUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -178,23 +180,19 @@
 		2CC9FF5D1FD9A4D7001D9273 /* FinalProject */ = {
 			isa = PBXGroup;
 			children = (
+				2CF951BA2008F6F40082D091 /* Model */,
 				2C63DA422007AE7F00D79D5B /* Pacifico.ttf */,
 				2CC9FF651FD9A4D7001D9273 /* Assets.xcassets */,
 				2CC9FF671FD9A4D7001D9273 /* LaunchScreen.storyboard */,
 				2CC9FF6A1FD9A4D7001D9273 /* Info.plist */,
 				2C459CAB20062FA0002F203D /* Main.storyboard */,
 				2C41615A1FFD49C000ED3956 /* StartVC.swift */,
-				2CA2440E1FE7DEC6003B3625 /* User.swift */,
-				2C459CA920061D05002F203D /* Follow+sql.swift */,
-				2C94CAE920050501005F594B /* Follow.swift */,
 				8481BC301FEBB322007193BC /* FollowersVC.swift */,
 				8481BC321FEBB344007193BC /* FollowersCell.swift */,
-				2C3218BA1FF9208D0051F42B /* Post+sql.swift */,
 				848D91801FEBF23F00838A3C /* PostVC.swift */,
 				848D91821FEBF25E00838A3C /* PostCell.swift */,
 				2CEDF37E20078D98006B6934 /* OnePostVC.swift */,
 				2CEDF38020078DB5006B6934 /* OnePostCell.swift */,
-				06C50B821FF27A360022F8F2 /* Post.swift */,
 				2C7886ED1FE13CD30089B5BF /* ProfileCollectionVC.swift */,
 				2C7886EF1FE13D080089B5BF /* ProfileHeaderVC.swift */,
 				84ADACAE1FEBCD5E00B72314 /* PictureCell.swift */,
@@ -207,11 +205,6 @@
 				846942C41FE9456500FD8B0F /* editVC.swift */,
 				2CC9FF8E1FD9A5CE001D9273 /* SignUpVC.swift */,
 				2CC9FF901FD9A5EB001D9273 /* ResetPasswordVC.swift */,
-				2C3218B91FF9208D0051F42B /* LastUpdateTable.swift */,
-				2C3218BB1FF9208D0051F42B /* ModelSql.swift */,
-				2C028BDD1FEFB5180024E2E9 /* Model.swift */,
-				2CA2440C1FE7D622003B3625 /* ModelFirebaseUsers.swift */,
-				06C50B801FF279800022F8F2 /* ModelFirebasePost.swift */,
 				2C3218C21FF926480051F42B /* FinalProject-Bridging-H eader.h */,
 				2C028BDF1FEFB6200024E2E9 /* GoogleService-Info.plist */,
 				2CC9FF5E1FD9A4D7001D9273 /* AppDelegate.swift */,
@@ -235,6 +228,24 @@
 				2CC9FF801FD9A4D8001D9273 /* Info.plist */,
 			);
 			path = FinalProjectUITests;
+			sourceTree = "<group>";
+		};
+		2CF951BA2008F6F40082D091 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2CA2440E1FE7DEC6003B3625 /* User.swift */,
+				2CA2440C1FE7D622003B3625 /* ModelFirebaseUsers.swift */,
+				2C459CA920061D05002F203D /* Follow+sql.swift */,
+				2C94CAE920050501005F594B /* Follow.swift */,
+				2C3218BA1FF9208D0051F42B /* Post+sql.swift */,
+				06C50B821FF27A360022F8F2 /* Post.swift */,
+				06C50B801FF279800022F8F2 /* ModelFirebasePost.swift */,
+				2C3218BB1FF9208D0051F42B /* ModelSql.swift */,
+				2C028BDD1FEFB5180024E2E9 /* Model.swift */,
+				2C3218B91FF9208D0051F42B /* LastUpdateTable.swift */,
+				2CF951BC2008F99E0082D091 /* Date+firebase.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		59F5E53F147A86A28E13834C /* Pods */ = {
@@ -591,6 +602,7 @@
 				84ADACAF1FEBCD5E00B72314 /* PictureCell.swift in Sources */,
 				8481BC331FEBB344007193BC /* FollowersCell.swift in Sources */,
 				2C3218BE1FF9208D0051F42B /* ModelSql.swift in Sources */,
+				2CF951BD2008F99E0082D091 /* Date+firebase.swift in Sources */,
 				2C94CAEA20050501005F594B /* Follow.swift in Sources */,
 				2CEDF38120078DB5006B6934 /* OnePostCell.swift in Sources */,
 				06C50B851FF2A0C10022F8F2 /* uploadVC.swift in Sources */,

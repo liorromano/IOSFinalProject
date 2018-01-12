@@ -1,9 +1,9 @@
 //
 //  LastUpdateTable.swift
-//  TestFb
+//  FinalProject
 //
-//  Created by Eliav Menachi on 28/12/2016.
-//  Copyright © 2016 menachi. All rights reserved.
+//  Created by Romano on 18/12/2017.
+//  Copyright © 2017 Romano. All rights reserved.
 //
 
 import Foundation

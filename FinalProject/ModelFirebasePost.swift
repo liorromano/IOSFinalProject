@@ -1,8 +1,8 @@
 //
-//  File.swift
+//  ModelFirebasePost.swift
 //  FinalProject
 //
-//  Created by Koral Shmueli on 26/12/2017.
+//  Created by Romano on 26/12/2017.
 //  Copyright © 2017 Romano. All rights reserved.
 //
 

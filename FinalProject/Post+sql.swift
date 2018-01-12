@@ -1,9 +1,9 @@
 //
-//  Student+sql.swift
-//  TestFb
+//  Post+sql.swift
+//  FinalProject
 //
-//  Created by Eliav Menachi on 21/12/2016.
-//  Copyright © 2016 menachi. All rights reserved.
+//  Created by Koral Shmueli on 26/12/2017.
+//  Copyright © 2017 Romano. All rights reserved.
 //
 
 import Foundation
@@ -55,9 +55,7 @@ extension Post{
             let postId = self.postID?.cString(using: .utf8)
             let userName = self.userName.cString(using: .utf8)
             var imageUrl = "".cString(using: .utf8)
-            if self.imageUrl != nil  {
-                imageUrl = self.imageUrl.cString(using: .utf8)
-            }
+            imageUrl = self.imageUrl.cString(using: .utf8)
             var description = "".cString(using: .utf8)
             if self.description != nil {
                 description = self.description?.cString(using: .utf8)
@@ -119,7 +117,6 @@ extension Post{
                 var description = String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,4))
                 var lat = String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,5))
                 var lang = String(validatingUTF8:sqlite3_column_text(sqlite3_stmt,6))
-                //print("read from filter st: \(stId) \(name) \(imageUrl)")
                 if (imageUrl != nil && imageUrl == ""){
                     imageUrl = nil
                 }
