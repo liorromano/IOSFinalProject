@@ -80,46 +80,7 @@ class uploadVC: UIViewController ,UIImagePickerControllerDelegate, UINavigationC
         
         //enable publish button
         publishButton.isEnabled = true
-        publishButton.backgroundColor = UIColor(red: 52.0/255.0, green: 169.0/255.0, blue: 255.0/255.0, alpha: 1)
-        
-        
-    }
-    
-    
-    //zooming in or out function
-    func zoomImage(){
-        //define frame of zoomed image
-        let zoomed = CGRect(x: 0, y: self.view.center.y-self.view.center.x , width: self.view.frame.size.width ,height: self.view.frame.size.width )
-        //frame of unzoomed (small image)
-        let unzoomed = CGRect(x: 15, y: self.navigationController!.navigationBar.frame.size.height+35 , width: self.view.frame.size.width/4.5 ,height: self.view.frame.size.width/4.5)
-        
-        //if picture unzommed, zoom it
-        if(picImage.frame == unzoomed){
-            //with animation
-            UIView.animate(withDuration: 0.3, animations: {()->Void in
-                //resize image frame
-                self.picImage.frame == zoomed
-                
-                //hide object of background
-                self.view.backgroundColor = .black
-                self.titleText.alpha = 0
-                self.publishButton.alpha = 0
-                
-            })
-        }
-            //to unzoom
-        else{
-            //with animation
-            UIView.animate(withDuration: 0.3, animations: {()->Void in
-                //resize image frame
-                self.picImage.frame = unzoomed
-                
-                //unhide object from background
-                self.view.backgroundColor = .white
-                self.titleText.alpha = 1
-                self.publishButton.alpha = 1
-            })
-        }
+        publishButton.backgroundColor = UIColor.blue
         
         
     }
@@ -178,8 +139,10 @@ class uploadVC: UIViewController ,UIImagePickerControllerDelegate, UINavigationC
                                         if(ans == true)
                                         {
                                             print("true")
-                                            self.picImage.image = UIImage(named: "UserPicture")
+                                            self.picImage.image = UIImage(named: "camera")
                                             self.titleText.text = nil
+                                            self.publishButton.isEnabled = false
+                                            self.publishButton.backgroundColor = UIColor.lightGray
                                             self.spinner?.stopAnimating()
                                             self.tabBarController!.selectedIndex = 0
                                         }
