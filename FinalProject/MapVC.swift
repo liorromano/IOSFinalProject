@@ -67,7 +67,8 @@ class MapVC: UIViewController , CLLocationManagerDelegate {
         
         //load posts locations on the map
         for post in postList{
-            
+            if((post.lang != nil) && (post.lat != nil))
+            {
             // Creates a marker in the center of the map.
             let marker = GMSMarker()
             
@@ -83,7 +84,7 @@ class MapVC: UIViewController , CLLocationManagerDelegate {
             })
             marker.snippet = post.description
             marker.map = mapView
-            
+            }
 
     }
 

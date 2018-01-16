@@ -27,6 +27,7 @@ class uploadVC: UIViewController ,UIImagePickerControllerDelegate, UINavigationC
     override func viewDidLoad() {
         super.viewDidLoad()
     
+        //function that ask for approval to use location
         locManager.requestAlwaysAuthorization()
         locManager.startUpdatingLocation()
         
@@ -34,11 +35,6 @@ class uploadVC: UIViewController ,UIImagePickerControllerDelegate, UINavigationC
         publishButton.isEnabled = false
         publishButton.backgroundColor = .lightGray
         
-        //hide keyboard tap
-        let hideTap = UITapGestureRecognizer(target: self , action: "hideKeyboardTap")
-        hideTap.numberOfTapsRequired = 1
-        self.view.isUserInteractionEnabled = true
-        self.view.addGestureRecognizer(hideTap)
         
         //declare select image tap
         let avaTap = UITapGestureRecognizer(target: self, action: #selector(uploadVC.loadImg))
@@ -109,6 +105,7 @@ class uploadVC: UIViewController ,UIImagePickerControllerDelegate, UINavigationC
             
             
         }
+        completion("","")
     }
 
     
@@ -118,7 +115,7 @@ class uploadVC: UIViewController ,UIImagePickerControllerDelegate, UINavigationC
         //dissmiss keyboard
         self.view.endEditing(true)
         
-        if let image = self.selectedImage{
+        let image = self.selectedImage
             
             //save the post to firebase
             Model.instance.loggedinUser(callback: { (userID) in
@@ -126,9 +123,7 @@ class uploadVC: UIViewController ,UIImagePickerControllerDelegate, UINavigationC
                     var postId = String((user?.numberOfPosts)!+1)
                     postId = (user?.uID?.appending(postId))!
                         self.getGPSLocation(completion: { (lat, lang) in
-                        print(lat)
-                        print(lang)
-                        Model.instance.savePostImage(image: image, userName: (user?.userName)!, userID: userID!, postID: (user?.numberOfPosts)!+1, callback: { (url) in
+                        Model.instance.savePostImage(image: image!, userName: (user?.userName)!, userID: userID!, postID: (user?.numberOfPosts)!+1, callback: { (url) in
                             self.imageUrl = url
                             let post = Post(userName:(user?.userName)!, imageUrl:self.imageUrl!, uID:userID!, lat: lat ,lang: lang, description:self.titleText.text, postID: postId)
                             Model.instance.addNewPost(post: post, callback: { (ans) in
@@ -166,13 +161,6 @@ class uploadVC: UIViewController ,UIImagePickerControllerDelegate, UINavigationC
                 
                 
             })
-            
-            
-        }
-        else{
-            
-        
-        }
 
     }
 }

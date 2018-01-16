@@ -88,14 +88,6 @@ class ProfileCollectionVC: UICollectionViewController {
         Model.instance.getAllPostsAndObserve()
         Model.instance.getAllFollowsAndObserve()
 
-        //pull to refresh
-        refresher = UIRefreshControl()
-        refresher.addTarget(self, action: #selector(ProfileCollectionVC.refresh), for: UIControlEvents.valueChanged)
-        collectionView?.addSubview(refresher)
-        
-        
-      
-        
     }
 
 
@@ -124,8 +116,6 @@ class ProfileCollectionVC: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView,
                                  viewForSupplementaryElementOfKind kind: String,
                                  at indexPath: IndexPath) -> UICollectionReusableView {
-        print("second")
-   
             //define haeder
             let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "ProfileHeader", for: indexPath) as! ProfileHeaderVC
             //get the user data with connection to firebase
@@ -165,8 +155,6 @@ class ProfileCollectionVC: UICollectionViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print ("self.postList.count")
-        print(self.postList.count)
         return self.postList.count
         
     }

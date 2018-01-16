@@ -10,6 +10,8 @@ import Foundation
 import UIKit
 import CoreLocation
 
+
+//notification
 class ModelNotificationBase<T>{
     var name:String?
     
@@ -53,17 +55,18 @@ class Model{
         
     }
     
+    //function that cleans all observes
     func clear(){
-        print("Model.clear")
         ModelFirebasePost.clearObservers()
     }
 
-    
+    //function that add user
     func addUser(user:User, password: String, email: String ){
         ModelFirebaseUsers.addNewUser(user: user, password: password, email: email ){(error) in
         }
     }
     
+    //function that get the user by user Id
     func getUserById(id:String, callback:@escaping (User?)->Void){
         
         ModelFirebaseUsers.getUserById(id: id, callback:{ (user) in
@@ -74,7 +77,7 @@ class Model{
         })
     }
 
-    
+    //function that gets the post list and update all the observs
     func getAllPostsAndObserve(){
         print("Model.getAllStudentsAndObserve")
         // get last update date from SQL
@@ -112,7 +115,7 @@ class Model{
         })
     }
     
-    
+    //save user profile image
     func saveImage(image:UIImage, name:String, callback:@escaping (String?)->Void){
         //1. save image to Firebase
         ModelFirebaseUsers.saveImageToFirebase(image: image, name: name, callback: {(url) in
@@ -125,6 +128,7 @@ class Model{
         })
     }
     
+    //get user profile image
     func getImage(urlStr:String, callback:@escaping (UIImage?)->Void){
         //1. try to get the image from local store
         let url = URL(string: urlStr)
@@ -146,7 +150,7 @@ class Model{
         }
     }
     
-    
+    //save profile image to local db
     private func saveImageToFile(image:UIImage, name:String){
         if let data = UIImageJPEGRepresentation(image, 0.8) {
             let filename = getDocumentsDirectory().appendingPathComponent(name)
@@ -159,12 +163,12 @@ class Model{
         let documentsDirectory = paths[0]
         return documentsDirectory
     }
-    
+    //get profile image from local db
     private func getImageFromFile(name:String)->UIImage?{
         let filename = getDocumentsDirectory().appendingPathComponent(name)
         return UIImage(contentsOfFile:filename.path)
     }
-    
+    //check if user exist by email and username
     public func checkIfUserExist(userName:String,email: String, callback:@escaping (String?)->Void)
     {
         var userEmailCheck: String?
@@ -172,28 +176,21 @@ class Model{
         
         ModelFirebaseUsers.checkIfUserExistByUserEmail(email: email, callback: { (answer) in
             userEmailCheck = answer!
-            print("userEmailCheck= "+userEmailCheck!)
             ModelFirebaseUsers.checkIfUserExistByUserName(userName: userName, callback: { (answer) in
                 userNameCheck = answer!
-                print("userNameCheck= "+userNameCheck!)
                 if((userEmailCheck?.compare("Email exist") == ComparisonResult.orderedSame)&&(userNameCheck?.compare("userName exist") == ComparisonResult.orderedSame)){
-                    print("both exist")
                     callback("both exist")
-                    
                 }
                 else if(userEmailCheck?.compare("Email exist") == ComparisonResult.orderedSame)
                 {
-                    print("email")
                     callback("email")
                 }
                 else if(userNameCheck?.compare("userName exist") == ComparisonResult.orderedSame)
                 {
-                    print("username")
                     callback("username")
                 }
                 else
                 {
-                    print("both avail")
                     callback("both avail")
                 }
 
@@ -202,7 +199,7 @@ class Model{
         
        
     }
-    
+    //send reset password mail to user
     public func checkEmail(email: String, callback:@escaping (Bool?)->Void)
     {
         var userEmailCheck: String?
@@ -220,20 +217,21 @@ class Model{
         })
     }
     
+    //login function
     public func login (email: String, password: String, callback:@escaping (Bool?)->Void)
     {
         ModelFirebaseUsers.authentication(email: email, password: password, callback: { (answer) in
             callback(answer)
         })
     }
-    
+    //who is logged in on this device
     func loggedinUser(callback:@escaping (String?)->Void){
         ModelFirebaseUsers.loggedinUser(callback: { (ans) in
             callback(ans)
         })
         
     }
-    
+    //logout
     public func logOut(callback:@escaping (Bool?)->Void)
     {
         ModelFirebaseUsers.logOut(callback: { (answer) in
@@ -241,7 +239,7 @@ class Model{
         })
     }
     
-    
+    //update the user parameters
     func updateUser(user: User, callback:@escaping (Bool)->Void)
     {
         ModelFirebaseUsers.updateUser(user: user, callback: { (answer) in
@@ -251,7 +249,7 @@ class Model{
     }
     
 
-    
+    //add new post
     func addNewPost(post: Post,callback:@escaping (Bool?)->Void){
         
         ModelFirebasePost.addNewPost(post: post, callback: { (answer) in
@@ -260,7 +258,7 @@ class Model{
         
     }
     
-    
+    //save image post
     func savePostImage(image:UIImage, userName:String, userID:String,postID:Int, callback:@escaping (String?)->Void){
         //1. save image to Firebase
         ModelFirebasePost.saveImageToFirebase(image: image, userID: userID, postID: postID, callback: { (url) in
@@ -274,28 +272,9 @@ class Model{
         
     }
     
-    func loadPostsToUserProfile(callback:@escaping ([Post]?)->Void){
-        ModelFirebasePost.loadPostsToUserProfile(callback: { (posts) in
-            if(posts!.count != 0){
-                callback(posts)
-            }
-            else{
-                callback(nil)
-            }
-        })
-    }
     
-    func fromPostArraytoPicArray(posts: [Post], callback:@escaping ([UIImage]?)->Void){
-        ModelFirebasePost.fromPostArraytoPicArray(posts: posts, callback: { (picArray) in
-            if(picArray != nil){
-                callback(picArray)
-            }
-            else{
-                callback(nil)
-            }
-        })
-    }
-    
+
+    //get the image to the post
     func getImagePost(urlStr:String, callback:@escaping (UIImage?)->Void){
         //1. try to get the image from local store
         let url = URL(string: urlStr)
@@ -317,16 +296,18 @@ class Model{
         }
     }
     
+    //update follow
     func follow( follower: String, following: String ){
         ModelFirebaseUsers.follow(follower: follower, following: following) { (error) in
             
         }
     }
-    
+    //update unfollow
     func unfollow(follower: String, following: String ){
         ModelFirebaseUsers.unfollow(follower: follower, following: following)
     }
     
+    //get all the follow list and all the observs for update
     func getAllFollowsAndObserve(){
         print("Model.getAllFollowsAndObserve")
         // get last update date from SQL

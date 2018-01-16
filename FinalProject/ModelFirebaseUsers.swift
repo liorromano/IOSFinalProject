@@ -13,7 +13,7 @@ import FirebaseAuth
 
 class ModelFirebaseUsers{
 
-    
+    //function that add the new user to firebase
     static func addNewUser(user: User, password: String, email: String, completionBlock:@escaping (Error?)->Void){
         Auth.auth().createUser(withEmail: email, password: password) {
             (uID, error) in
@@ -26,7 +26,7 @@ class ModelFirebaseUsers{
 
         }
     }
-    
+    //save image to firebase
    static func saveImageToFirebase(image:UIImage, name:(String), callback:@escaping (String?)->Void){
     let filesRef = Storage.storage().reference(forURL:
         "gs://finalproject-53f16.appspot.com/profile/").child(name)
@@ -42,40 +42,36 @@ class ModelFirebaseUsers{
         }
     }
     
-
+    //check if user exist by username
    static func checkIfUserExistByUserName(userName:String, callback:@escaping (String?)->Void)
     {
         getUserById(id: userName, callback: {(user) in
             if (user != nil)
             {
-                print("got into user.userName == userName")
                 callback("userName exist")
                 
             }
             else{
-                print("UserName avail")
                 callback("userName avail")
                 
             }
         })
     }
-    
+    //check if user exist by email in authntication
    static func checkIfUserExistByUserEmail(email:String, callback:@escaping (String?)->Void)
     {
         Auth.auth().fetchProviders(forEmail: email) { (string, error) in
             if (string != nil) {
-                print ("email not avail")
                 callback("Email exist")
                 
             } else {
-                print ("email avail")
                 callback("Email avail")
                 
             }
 
         }
     }
-    
+    //reset function email from firebase
     static func sendResetPassword(email: String)
     {
         Auth.auth().sendPasswordReset(withEmail: email) { (error) in
@@ -83,23 +79,21 @@ class ModelFirebaseUsers{
         }
         
     }
-    
+    //check if user email and password is ok for log in
     static public func authentication(email: String, password: String, callback:@escaping (Bool?)->Void)
     {
         Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
             if(user != nil)
             {
-                print("user autenticated")
                 callback(true)
             }
             else{
-             print ("there was an error")
                 callback (false)
             }
         }
         
     }
-    
+    //log out
     static public func logOut(callback:@escaping (Bool?)->Void)
     {
         try! Auth.auth().signOut()
@@ -107,6 +101,7 @@ class ModelFirebaseUsers{
         
     }
     
+    //get the profile image from firebase
    static func getImageFromFirebase(url:String, callback:@escaping (UIImage?)->Void){
         let ref = Storage.storage().reference(forURL: url)
         
@@ -119,6 +114,7 @@ class ModelFirebaseUsers{
             }
         })
     }
+    //get the user from firebase by uId
    static func getUserById(id:String, callback:@escaping (User?)->Void){
         Database.database().reference().child("Users").child(id).observeSingleEvent(of: .value, with: { (snapshot) in
             
@@ -137,12 +133,12 @@ class ModelFirebaseUsers{
     }
     
 
-    
+    //current user that logged in to this app
    static func loggedinUser(callback:@escaping (String?)->Void){
         callback(Auth.auth().currentUser?.uid)
             
     }
-    
+    //function that update the user in firebase
    static func updateUser(user: User, callback:@escaping (Bool)->Void)
     {
         Database.database().reference().child("Users").child(user.uID!).updateChildValues(user.toJson(), withCompletionBlock: { (error, DatabaseReference) in
@@ -157,7 +153,7 @@ class ModelFirebaseUsers{
         })
     
     }
-    
+    //save follow to follow in firebase
     static func follow(follower: String, following: String , completionBlock:@escaping (Error?)->Void)
     {
         let myRef = Database.database().reference().child("follow").child(follower.appending(following))
@@ -168,13 +164,13 @@ class ModelFirebaseUsers{
         }
         
     }
-    
+    //update follow to unfollow in firebase
     static func unfollow(follower: String, following: String)
     {
         let myRef = Database.database().reference().child("follow").child(follower.appending(following))
         myRef.updateChildValues(["deleted": "true"])
     }
-    
+    //function that gets all the follow list from firebase
     static func getAllFollowsAndObserve(_ lastUpdateDate:Date?, callback:@escaping ([Follow])->Void){
         print("FB: getAllFollowsAndObserve")
         let handler = {(snapshot:DataSnapshot) in

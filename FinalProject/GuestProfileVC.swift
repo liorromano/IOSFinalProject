@@ -78,8 +78,8 @@ class GuestProfileVC: UICollectionViewController {
                             self.following.append(follow)
                         }
                         Model.instance.loggedinUser(callback: { (uid) in
-                            let s = String(self.userID.appending(uid!) )
-                            if((follow.followID == s)  && (follow.deleted == "false"))
+                            let loggedInUser = String(self.userID.appending(uid!) )
+                            if((follow.followID == loggedInUser)  && (follow.deleted == "false"))
                             {
                                 self.followFlag = true
                             }
@@ -97,12 +97,6 @@ class GuestProfileVC: UICollectionViewController {
         spinner?.startAnimating()
         Model.instance.getAllPostsAndObserve()
         Model.instance.getAllFollowsAndObserve()
-        
-        //pull to refresh
-        refresher = UIRefreshControl()
-        refresher.addTarget(self, action: #selector(GuestProfileVC.refresh), for: UIControlEvents.valueChanged)
-        collectionView?.addSubview(refresher)
-        
         
         
         
@@ -134,7 +128,6 @@ class GuestProfileVC: UICollectionViewController {
     override func collectionView(_ collectionView: UICollectionView,
                                  viewForSupplementaryElementOfKind kind: String,
                                  at indexPath: IndexPath) -> UICollectionReusableView {
-        print("second")
         
         //define haeder
         let headerView = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "GuestProfileHeaderVC", for: indexPath) as! GuestProfileHeaderVC

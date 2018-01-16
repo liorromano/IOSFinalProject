@@ -73,14 +73,12 @@ class SignInVC: UIViewController {
            Model.instance.login(email: SignInUsermaneTxt.text!, password: SignInPasswordTxt.text!, callback: { (answer) in
             if(answer == true)
             {
-                print ("autenticated")
                 self.spinner?.stopAnimating()
                 let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
                 let newViewController = storyBoard.instantiateViewController(withIdentifier: "TabBar")
                 self.present(newViewController, animated: true, completion: nil)
             }
             else{
-                print("not autenticated")
                 self.spinner?.stopAnimating()
                 let alert = UIAlertController(title: "Error", message: "please check email and password", preferredStyle: UIAlertControllerStyle.alert)
                 let ok = UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil)

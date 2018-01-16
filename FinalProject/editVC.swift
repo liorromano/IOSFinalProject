@@ -28,7 +28,7 @@ class editVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource, UII
     //pickerView & pickerData
     var genderPicker: UIPickerView!
     var selectedImage:UIImage?
-    let genders = ["male","female"]
+    let genders = ["","male","female"]
     
  
     override func viewDidLoad() {
@@ -76,7 +76,8 @@ class editVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource, UII
         self.spinner?.startAnimating()
         Model.instance.loggedinUser { (uID) in
             if(uID != nil)
-            {   print("uid ok")
+            {
+                
                 Model.instance.getUserById(id: uID!, callback: { (user) in
                     
                     if(user?.imageUrl != nil)
@@ -100,7 +101,6 @@ class editVC: UIViewController ,UIPickerViewDelegate,UIPickerViewDataSource, UII
                     }
                     else
                     {
-                        
                         
                         self.fullNameTxt.text = user?.fullName
                         if(user?.gender != nil)

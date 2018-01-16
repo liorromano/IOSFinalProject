@@ -77,46 +77,6 @@ class ModelFirebasePost{
         }
     }
     
-  static func loadPostsToUserProfile(callback:@escaping ([Post]?)->Void){
-        var postArray = [Post]()
-        Model.instance.loggedinUser { (logginUser) in
-            Database.database().reference().child("posts").child(logginUser!).observeSingleEvent(of: .value, with: { (snapshot) in
-                for child in snapshot.children{
-                    print("for")
-                    // Get post value
-                    let snap = child as! DataSnapshot
-                    let value = snap.value as? NSDictionary
-                    let post = Post(json: value as! Dictionary<String,Any> )
-                    postArray.append(post)
-                }
-                if(postArray.count != 0){
-                    print("postarray count")
-                    print(postArray.count)
-                    callback(postArray)
-                }
-                else{
-                    print("else")
-                    callback(nil)
-                }
-            })
-            
-        }
-        
-        
-    }
-    
-     static func fromPostArraytoPicArray(posts: [Post], callback:@escaping ([UIImage]?)->Void)
-    {
-        var picArray = [UIImage]()
-        for post in posts
-        {
-            Model.instance.getImagePost(urlStr: post.imageUrl, callback: { (image) in
-                picArray.append(image!)
-            })
-        }
-        callback(picArray)
-    }
-    
     
     static func clearObservers(){
         let ref = Database.database().reference().child("posts")
